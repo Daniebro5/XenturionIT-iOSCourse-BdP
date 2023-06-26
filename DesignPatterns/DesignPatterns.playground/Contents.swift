@@ -1,12 +1,12 @@
 // Design Patterns in Swift // Gang of Four GoF
 // Resolver problemas de lógica de negocio
 
-// Patrones de Creacion
+// Patrones de Creación
 // Abstract Factory
 // Builder
 // Factory Method
 // Prototype
-// Singleton***
+// Singleton
 
 // Patrones Estructurales
 // Adapter
@@ -18,7 +18,7 @@
 // Proxy
 
 // Patrones de Comportamiento
-// Chain of responsability
+// Chain of Responsibility
 // Command
 // Iterator
 // Mediator
@@ -30,32 +30,42 @@
 // Visitor
 
 
-
 /* Abstract Factory
 
- Constuimos una familia de Productos: Mesa, silla y sillón
- Variantes de Productos: Modern, Victoriana, Clásica
+ Construimos una familia de Productos: Mesa, silla y sillón
+ Variantes de Productos: Moderna, Victoriana, Clásica
  
- Necesidad: Hacer un match de las variantes con los productos que necesita, es decir vender los productos que quiera el cliente de la misma variante, a la vez que adaptarnos al crecimiento de productos y variantes
+ Necesidad: Hacer un match de las variantes con los productos que necesita, es decir, vender los productos que quiera el cliente de la misma variante, a la vez que adaptarnos al crecimiento de productos y variantes
  
  Primero debemos abstraer los productos como interfaces (Protocolos) y luego aplicar las variantes a estas interfaces
  
- Interfaz Silla (hasLegs(), sitOn()) <- (Victoriana)
- Interfaz Silla (hasLegs(), sitOn()) <- (Moderna)
+ Protocolo Silla {
+    func hasLegs()
+    func sitOn()
+ }
+ 
+ Protocolo Mesa {
+    func hasLegs()
+    func putThingsOn()
+ }
+ 
+ Protocolo Sillon {
+    func hasLegs()
+    func sitOn()
+ }
 
 */
 
 
-
 /* BUILDER
  
- permite crear objetos complejos paso por paso, especialmente util cuando existen muchìsimas subvariantes del objeto
+ Permite crear objetos complejos paso a paso, especialmente útil cuando existen muchísimas subvariantes del objeto
  
- Casa(conGarage: Bool, conPatio: Bool, cuantosPisos: Int, queTecho: "String")
+ Casa(conGarage: Bool, conPatio: Bool, cuantosPisos: Int, queTecho: String)
  
- protocol (interfaz) Casa {
-    var garage: Bool
-    var patio: Bool
+ Protocolo Casa {
+    var garage: Bool { get }
+    var patio: Bool { get }
     ......
  
  }
@@ -76,11 +86,11 @@
  
  SOLUCIÓN
  
- protocol House {
+ Protocolo House {
     func mudarseAhí()
     func cambiarTechoAMadera()
     func construirGarage()
- ...
+    ...
  }
  
  class BuilderGarages {
@@ -98,17 +108,17 @@
 /*
  Factory Method
  
- de que clase es esto?
- que rol juega esta clase?
- en que sentido estàn relacionados el comportamiento de la clase?
+ ¿De qué clase es esto?
+ ¿Qué rol juega esta clase?
+ ¿En qué sentido están relacionados el comportamiento de la clase?
  
  */
 
 /*
  Prototype
  
- Nos permite clonar clases, incluso las màs complejas, sin necesidad de enviar las dependencias de esa clase.
- Persona(Danni Brito) -> Persona(nombre, apellido, trabajo, exp, papa, mama, .......) private exNovia
+ Nos permite clonar clases, incluso las más complejas, sin necesidad de enviar las dependencias de esa clase.
+ Persona(Danni Brito) -> Persona(nombre, apellido, trabajo, exp, papá, mamá, .......) private exNovia
  
  let a = Danni()
  let b = a
@@ -120,7 +130,7 @@
 /*
  
  Patrones de arquitectura
- Comunicaciòn entre mòdulos
+ Comunicación entre módulos
  
  
  Todos tienen un Model por debajo - Implícito
@@ -131,16 +141,10 @@
  - Massive ViewController
  
  MVVM -> Model - View - ViewModel
- - Usuario mira la vista, pero interactua con el ViewModel, progracion reactiva very good
+ - El usuario mira la vista, pero interactúa con el ViewModel, programación reactiva muy buena
  
- VIPER -> View - Interactor(logica del negocio) - "Presenter (se suele omitir, y es necesario en View Complejas)" - Router (BUILDER)
+ VIPER -> View - Interactor(lógica del negocio) - "Presenter (se suele omitir, y es necesario en View Complejas)" - Router (BUILDER)
  
  RIBs (es un lego) -> Router - Interactor - Builder
     - Router - desde donde puede venir o instanciarse
-    - El builder lo construye
-    - el interactor maneja la logica del negocio y llama al router
- 
-    // PantallaA - TocamosImageParaIrB - Llamo al router
- 
- */
-
+    - El
