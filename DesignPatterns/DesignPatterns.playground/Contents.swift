@@ -163,22 +163,4 @@
  - Conceptos clave: Separación de algoritmos, Operaciones en objetos sin modificar su estructura.
  - Analogía: Piensa en un inspector de seguridad que realiza diferentes verificaciones en diferentes tipos de edificios, como inspeccionar la estructura, revisar los sistemas de seguridad, etc. El inspector de seguridad es capaz de realizar diferentes operaciones en cada tipo de edificio sin cambiar la estructura interna del edificio.
  
- Patrones de arquitectura
- Comunicación entre módulos
  
- 
- Todos tienen un Model por debajo - Implícito
- 
- +Complejo +Testeo
- 
- MVC -> Model "ViewController" - Apps pequeñas
- - Massive ViewController
- 
- MVVM -> Model - View - ViewModel
- - El usuario mira la vista, pero interactúa con el ViewModel, programación reactiva muy buena
- 
- VIPER -> View - Interactor(lógica del negocio) - "Presenter (se suele omitir, y es necesario en View Complejas)" - Router (BUILDER)
- 
- RIBs (es un lego) -> Router - Interactor - Builder
- - Router - desde donde puede venir o instanciarse
- - El
