@@ -11,7 +11,6 @@
 		FB352B312A49CE60008CB486 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB352B302A49CE60008CB486 /* ContentView.swift */; };
 		FB352B332A49CE62008CB486 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB352B322A49CE62008CB486 /* Assets.xcassets */; };
 		FB352B362A49CE62008CB486 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB352B352A49CE62008CB486 /* Preview Assets.xcassets */; };
-		FB352B402A49CE63008CB486 /* DesignPatternsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB352B3F2A49CE63008CB486 /* DesignPatternsTests.swift */; };
 		FB352B592A49CE95008CB486 /* AbstractFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB352B582A49CE95008CB486 /* AbstractFactory.swift */; };
 		FB352B5B2A49EBD4008CB486 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB352B5A2A49EBD4008CB486 /* Builder.swift */; };
 		FB352B5D2A49FA38008CB486 /* FactoryMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB352B5C2A49FA38008CB486 /* FactoryMethod.swift */; };
@@ -36,7 +35,6 @@
 		FB352B322A49CE62008CB486 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB352B352A49CE62008CB486 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FB352B3B2A49CE63008CB486 /* DesignPatternsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DesignPatternsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB352B3F2A49CE63008CB486 /* DesignPatternsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignPatternsTests.swift; sourceTree = "<group>"; };
 		FB352B582A49CE95008CB486 /* AbstractFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractFactory.swift; sourceTree = "<group>"; };
 		FB352B5A2A49EBD4008CB486 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		FB352B5C2A49FA38008CB486 /* FactoryMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryMethod.swift; sourceTree = "<group>"; };
@@ -102,14 +100,21 @@
 		FB352B3E2A49CE63008CB486 /* DesignPatternsTests */ = {
 			isa = PBXGroup;
 			children = (
-				FB352B3F2A49CE63008CB486 /* DesignPatternsTests.swift */,
+				FB352B622A4B1972008CB486 /* CreationalPatterns */,
+			);
+			path = DesignPatternsTests;
+			sourceTree = "<group>";
+		};
+		FB352B622A4B1972008CB486 /* CreationalPatterns */ = {
+			isa = PBXGroup;
+			children = (
 				FB352B582A49CE95008CB486 /* AbstractFactory.swift */,
 				FB352B5A2A49EBD4008CB486 /* Builder.swift */,
 				FB352B5C2A49FA38008CB486 /* FactoryMethod.swift */,
 				FB352B5E2A49FFE4008CB486 /* Prototype.swift */,
 				FB352B602A4A95F1008CB486 /* Singleton.swift */,
 			);
-			path = DesignPatternsTests;
+			path = CreationalPatterns;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,7 +229,6 @@
 				FB352B592A49CE95008CB486 /* AbstractFactory.swift in Sources */,
 				FB352B612A4A95F1008CB486 /* Singleton.swift in Sources */,
 				FB352B5F2A49FFE4008CB486 /* Prototype.swift in Sources */,
-				FB352B402A49CE63008CB486 /* DesignPatternsTests.swift in Sources */,
 				FB352B5B2A49EBD4008CB486 /* Builder.swift in Sources */,
 				FB352B5D2A49FA38008CB486 /* FactoryMethod.swift in Sources */,
 			);
