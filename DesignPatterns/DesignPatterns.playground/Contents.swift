@@ -90,13 +90,13 @@
  
  ********** Patrones Estructurales **********
  
- 6. Adapter:
+ 6. Adapter (Adaptador):
  - Descripción: El patrón Adapter permite que dos interfaces incompatibles trabajen juntas mediante la conversión de la interfaz de una clase en otra interfaz esperada por el cliente.
  - Ejemplo: Supongamos que tienes un reproductor de música que reproduce archivos MP3, pero también tienes algunos archivos en formato WAV que no son compatibles. Puedes utilizar un adaptador que convierta la interfaz del reproductor de música para reproducir los archivos WAV.
  - Conceptos clave: Conversión de interfaz, Compatibilidad.
  - Analogía: Imagina que estás de viaje en un país extranjero y necesitas cargar tus dispositivos electrónicos. Sin embargo, los enchufes y voltajes son diferentes. Aquí es cuando utilizas un adaptador de enchufe que convierte la interfaz del enchufe extranjero en una interfaz compatible con tu dispositivo. De esta manera, puedes conectar y cargar tus dispositivos sin problemas.
  
- 7. Bridge:
+ 7. Bridge (Puente):
  - Descripción: El patrón Bridge desacopla una abstracción de su implementación, permitiendo que ambas varíen de forma independiente.
  - Ejemplo: Supongamos que tienes una abstracción llamada "Forma" que tiene varias implementaciones como "Círculo" y "Cuadrado". El patrón Bridge te permite cambiar la implementación de una forma sin afectar la abstracción ni las otras formas.
  - Conceptos clave: Desacoplamiento, Independencia.

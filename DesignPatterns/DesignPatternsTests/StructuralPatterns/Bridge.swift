@@ -39,7 +39,6 @@ class ExtendedAbstraction: Abstraction {
 /// provides only primitive operations, while the Abstraction defines higher-
 /// level operations based on those primitives.
 protocol Implementation {
-
     func operationImplementation() -> String
 }
 
