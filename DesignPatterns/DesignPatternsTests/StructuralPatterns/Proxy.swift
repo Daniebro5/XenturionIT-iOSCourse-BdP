@@ -11,7 +11,6 @@ import XCTest
 /// the Proxy. As long as the client works with RealSubject using this
 /// interface, you'll be able to pass it a proxy instead of a real subject.
 protocol Subject {
-
     func request()
 }
 
@@ -42,8 +41,7 @@ class Proxy: Subject {
     /// of these things and then, depending on the result, pass the execution to
     /// the same method in a linked RealSubject object.
     func request() {
-
-        if (checkAccess()) {
+        if checkAccess() {
             realSubject.request()
             logAccess()
         }
@@ -52,7 +50,6 @@ class Proxy: Subject {
     private func checkAccess() -> Bool {
 
         /// Some real checks should go here.
-
         print("Proxy: Checking access prior to firing a real request.")
 
         return true
