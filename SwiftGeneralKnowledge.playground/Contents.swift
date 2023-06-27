@@ -115,6 +115,8 @@
 
 // Static vars
 // Variables computadas
-// alternativas a singleton y repercusiones en pruebas
+// alternativas a singleton y repercusiones en pruebas (xq es antipatron)
 // alta cohesiòn y bajo acoplamiento -> reutilizable
 // Composite para transiciòn a SwiftUI
+// notación de diccionario y arrays de multiples dimensiones
+// Porque un diccionario es rápido, complejidad temporal, comparación con otras estructuras de datos

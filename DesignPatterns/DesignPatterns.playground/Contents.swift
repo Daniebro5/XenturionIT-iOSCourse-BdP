@@ -108,21 +108,19 @@
  - Conceptos clave: Jerarquía parte-todo, Tratamiento uniforme.
  - Analogía: Piensa en una empresa que tiene diferentes niveles jerárquicos, desde empleados individuales hasta equipos y departamentos. Puedes tratar a cada empleado como una entidad individual, pero también puedes agruparlos en equipos y departamentos y tratar a esas agrupaciones como una única entidad para realizar operaciones y tomar decisiones a nivel de equipo o departamento.
  
- 9. Decorator:
+ 9. Decorator (Decorador):
  - Descripción: El patrón Decorator permite agregar funcionalidades adicionales a un objeto de manera dinámica, envolviéndolo en objetos decoradores que implementan la misma interfaz.
- - Ejemplo: Supongamos que tienes una clase de café básica y deseas agregar opciones de decoración como leche, azúcar o crema sin
- 
- afectar la clase base. Puedes utilizar el patrón Decorator para envolver el objeto de café en objetos decoradores que añadan las opciones de decoración deseada.
+ - Ejemplo: Supongamos que tienes una clase de café básica y deseas agregar opciones de decoración como leche, azúcar o crema sin afectar la clase base. Puedes utilizar el patrón Decorator para envolver el objeto de café en objetos decoradores que añadan las opciones de decoración deseada.
  - Conceptos clave: Extensibilidad, Composición dinámica.
  - Analogía: Piensa en un árbol de Navidad al que le agregas adornos decorativos como luces, guirnaldas y bolas. Puedes modificar la apariencia del árbol añadiendo o quitando diferentes adornos sin afectar la estructura básica del árbol. Del mismo modo, el patrón Decorator te permite agregar funcionalidades adicionales a un objeto sin alterar su estructura subyacente.
  
- 10. Facade:
+ 10. Facade (Fachada):
  - Descripción: El patrón Facade proporciona una interfaz simplificada para un subsistema complejo, ocultando su complejidad y facilitando su uso.
  - Ejemplo: Supongamos que tienes un sistema de inicio de sesión que consta de múltiples componentes como autenticación, verificación de permisos y registro de actividad. Puedes utilizar el patrón Facade para crear una interfaz simplificada que encapsule todo el proceso de inicio de sesión y oculte la complejidad de los componentes internos.
  - Conceptos clave: Simplificación, Ocultamiento de complejidad.
  - Analogía: Imagina que estás utilizando un teléfono móvil con una interfaz de usuario intuitiva. Aunque detrás de esa interfaz hay múltiples componentes y procesos complejos que permiten el funcionamiento del teléfono, no necesitas conocer todos los detalles internos para realizar tareas básicas como hacer una llamada o enviar un mensaje. La interfaz del teléfono actúa como una fachada que simplifica y oculta la complejidad subyacente para facilitar su uso.
  
- 11. Flyweight:
+ 11. Flyweight (Contrapeso):
  - Descripción: El patrón Flyweight optimiza el uso de objetos compartiendo eficientemente aquellos que son comunes a varias instancias, reduciendo así el consumo de memoria.
  - Ejemplo: Supongamos que tienes un editor de texto donde puedes cambiar el estilo de fuente y color de los caracteres. En lugar de almacenar toda la información de estilo en cada carácter individualmente, puedes utilizar el patrón Flyweight para compartir eficientemente los estilos comunes entre varios caracteres y reducir el consumo de memoria.
  - Conceptos clave: Compartir objetos, Ahorro de memoria.
