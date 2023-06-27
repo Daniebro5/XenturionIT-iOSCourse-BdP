@@ -102,7 +102,7 @@
  - Conceptos clave: Desacoplamiento, Independencia.
  - Analogía: Imagina un puente que conecta dos islas. El puente actúa como una abstracción que permite el paso de personas y vehículos de una isla a otra. Sin embargo, el diseño del puente puede variar independientemente de las islas que conecta. Puedes tener un puente colgante, un puente de arco o un puente levadizo, y aún así cumplir su función de conectar las islas.
  
- 8. Composite:
+ 8. Composite (Compuesto):
  - Descripción: El patrón Composite compone objetos en estructuras de árbol para representar jerarquías parte-todo. Permite tratar tanto a los objetos individuales como a las composiciones de manera uniforme.
  - Ejemplo: Imagina que tienes una aplicación de dibujo con diferentes elementos gráficos como círculos, cuadrados y triángulos. Puedes utilizar el patrón Composite para tratar tanto a los elementos individuales como a los grupos de elementos como una única entidad.
  - Conceptos clave: Jerarquía parte-todo, Tratamiento uniforme.

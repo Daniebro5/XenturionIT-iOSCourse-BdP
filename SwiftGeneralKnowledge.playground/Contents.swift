@@ -117,3 +117,4 @@
 // Variables computadas
 // alternativas a singleton y repercusiones en pruebas
 // alta cohesiòn y bajo acoplamiento -> reutilizable
+// Composite para transiciòn a SwiftUI
