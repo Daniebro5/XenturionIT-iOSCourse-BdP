@@ -121,3 +121,5 @@
 // notación de diccionario y arrays de multiples dimensiones
 // Porque un diccionario es rápido, complejidad temporal, comparación con otras estructuras de datos
 // Proxy para debug de llamadas API
+// CoreAnimation
+// VisionPro (2D)

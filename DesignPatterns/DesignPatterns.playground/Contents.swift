@@ -67,7 +67,7 @@
  2. Builder (Constructor):
  - Descripción: Permite construir objetos complejos paso a paso. Se utiliza cuando hay muchas formas posibles de construir un objeto.
  - Ejemplo: Construcción de una casa personalizada. El proceso de construcción implica decisiones sobre características como el número de habitaciones, el tipo de techo, la presencia de un garaje, etc.
- - Conceptos clave: Construcción paso a paso, Configuraciones personalizadas.
+ - Conceptos clave: Construcción paso a paso, Configuraciones personalizadas, construcciones complejas.
  - Analogía: Piensa en un constructor de casas. Cada cliente puede tener requisitos personalizados para su hogar, como el número de habitaciones, el diseño del techo y los materiales de construcción. El constructor sigue un proceso paso a paso para construir la casa según las preferencias del cliente, sin importar cuán diferentes sean las especificaciones entre diferentes clientes.
  
  3. Factory Method (Método de Fábrica):
@@ -79,7 +79,7 @@
  4. Prototype (Prototipo):
  - Descripción: Permite crear copias de un objeto existente sin acoplar el código a la clase concreta del objeto.
  - Ejemplo: Un editor de gráficos que permite clonar figuras para crear nuevas instancias con propiedades similares.
- - Conceptos clave: Clonación, Copias de objetos.
+ - Conceptos clave: Clonación de objetos.
  - Analogía: Imagina que estás diseñando tarjetas de felicitación personalizadas. En lugar de crear cada tarjeta desde cero, puedes hacer un prototipo inicial con elementos comunes y luego clonar el prototipo para crear nuevas tarjetas con diferentes mensajes y detalles. De esta manera, ahorras tiempo y esfuerzo al no tener que diseñar cada tarjeta desde cero.
  
  5. Singleton:

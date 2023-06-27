@@ -114,8 +114,8 @@
 		FB352B3E2A49CE63008CB486 /* DesignPatternsTests */ = {
 			isa = PBXGroup;
 			children = (
-				FB352B632A4B1B44008CB486 /* StructuralPatterns */,
 				FB352B622A4B1972008CB486 /* CreationalPatterns */,
+				FB352B632A4B1B44008CB486 /* StructuralPatterns */,
 			);
 			path = DesignPatternsTests;
 			sourceTree = "<group>";
