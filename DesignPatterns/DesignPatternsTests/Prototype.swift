@@ -89,9 +89,3 @@ class PrototypeConceptual: XCTestCase {
         Client.someClientCode()
     }
 }
-
-
-// private modulo
-// fileprivate archivo
-// internal - abierto solo al modulo
-// open - cualquier lugar de la app

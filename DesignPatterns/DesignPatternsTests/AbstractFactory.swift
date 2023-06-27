@@ -171,15 +171,3 @@ class AbstractFactoryConceptual: XCTestCase {
         Client.someClientCode(factory: ConcreteFactory2())
     }
 }
-
-// FabricaAbstracta
-//      FabricaAbstractaModerna
-//          Cama
-//          Silla
-//          Mesas
-//      FabricaAbstractaVictoriana
-//          Cama -> Concreto
-//          Silla
-//          Mesas
-
-// CamaAbstracta - SillaAbstracta - MesaAbstracta
