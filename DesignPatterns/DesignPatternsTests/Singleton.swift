@@ -10,7 +10,7 @@ import XCTest
 /// The Singleton class defines the `shared` field that lets clients access the
 /// unique singleton instance.
 class Singleton {
-
+    
     /// The static field that controls the access to the singleton instance.
     ///
     /// This implementation let you extend the Singleton class while keeping
@@ -21,11 +21,11 @@ class Singleton {
         // ...
         return instance
     }()
-
+    
     /// The Singleton's initializer should always be private to prevent direct
     /// construction calls with the `new` operator.
     private init() {}
-
+    
     /// Finally, any singleton should define some business logic, which can be
     /// executed on its instance.
     func someBusinessLogic() -> String {
@@ -36,7 +36,7 @@ class Singleton {
 
 /// Singletons should not be cloneable.
 extension Singleton: NSCopying {
-
+    
     func copy(with zone: NSZone? = nil) -> Any {
         return self
     }
@@ -48,7 +48,7 @@ fileprivate class Client {
     static func someClientCode() {
         let instance1 = Singleton.shared
         let instance2 = Singleton.shared
-
+        
         if (instance1 === instance2) {
             print("Singleton works, both variables contain the same instance.")
         } else {
@@ -60,7 +60,7 @@ fileprivate class Client {
 
 /// Let's see how it all works together.
 class SingletonConceptual: XCTestCase {
-
+    
     func testSingletonConceptual() {
         Client.someClientCode()
     }
