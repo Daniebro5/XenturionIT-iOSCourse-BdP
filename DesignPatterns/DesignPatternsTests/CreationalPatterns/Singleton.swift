@@ -9,7 +9,7 @@ import XCTest
 
 /// The Singleton class defines the `shared` field that lets clients access the
 /// unique singleton instance.
-class Singleton {
+final class Singleton {
     
     /// The static field that controls the access to the singleton instance.
     ///

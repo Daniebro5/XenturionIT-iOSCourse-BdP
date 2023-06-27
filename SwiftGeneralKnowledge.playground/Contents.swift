@@ -109,3 +109,11 @@
  En resumen, if let y guard let son constructos útiles para trabajar con opcionales en Swift y garantizar un manejo seguro de los valores opcionales. if let se utiliza para realizar acciones específicas cuando un opcional contiene un valor no nulo, mientras que guard let se utiliza para salir tempranamente de un bloque de código si el opcional es nil.
  
  */
+
+
+
+
+// Static vars
+// Variables computadas
+// alternativas a singleton y repercusiones en pruebas
+// alta cohesiòn y bajo acoplamiento -> reutilizable
