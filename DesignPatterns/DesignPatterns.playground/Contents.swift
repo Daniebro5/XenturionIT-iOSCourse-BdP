@@ -54,7 +54,7 @@
  - Conceptos clave: Única instancia, Acceso global.
  - Analogía: Piensa en un sistema de control de tráfico en una ciudad. Puede haber un solo controlador central que gestione y coordine todas las señales de tráfico para mantener el flujo ordenado. El controlador es una instancia única que garantiza que todas las señales de tráfico funcionen en armonía y evita que se produzcan conflictos o caos en las calles.
 
- ********** Patrones de Creación **********
+ ********** Patrones Estructurales **********
  
  6. Adapter:
  - Descripción: El patrón Adapter permite que dos interfaces incompatibles trabajen juntas mediante la conversión de la interfaz de una clase en otra interfaz esperada por el cliente.
@@ -99,6 +99,69 @@
  - Ejemplo: Supongamos que tienes una clase que carga imágenes desde un servidor remoto. Puedes utilizar un proxy para controlar el acceso a las imágenes y proporcionar funciones como caché, carga diferida o seguridad adicional.
  - Conceptos clave: Control de acceso, Funcionalidades adicionales.
  - Analogía: Imagina que estás en una oficina y deseas tener una mayor seguridad para el acceso a ciertas áreas restringidas. Puedes utilizar un sistema de tarjetas de acceso donde necesitas mostrar una tarjeta válida en un lector para poder ingresar. El lector de tarjetas actúa como un proxy que controla el acceso a las áreas restringidas y proporciona una capa adicional de seguridad y control.
+ 
+ ********** Patrones de Comportamiento **********
+ 
+
+ 13. Chain of Responsibility:
+ - Descripción: El patrón Chain of Responsibility permite pasar una solicitud a través de una cadena de objetos receptores, cada uno de los cuales tiene la oportunidad de manejar la solicitud o pasarla al siguiente receptor de la cadena.
+ - Ejemplo: Supongamos que tienes una aplicación de soporte al cliente donde los usuarios pueden enviar solicitudes de ayuda. Puedes utilizar el patrón Chain of Responsibility para crear una cadena de manejo de solicitudes, donde cada objeto receptor en la cadena tiene la opción de manejar la solicitud o pasarla al siguiente receptor.
+ - Conceptos clave: Cadena de objetos, Manejo de solicitudes.
+ - Analogía: Imagina que trabajas en un departamento de atención al cliente y recibes una consulta de un cliente. Si no puedes responder a la consulta, la reenvías a otro departamento más especializado que pueda manejarla. La consulta pasa a través de una cadena de responsabilidad hasta que es manejada adecuadamente.
+
+ 14. Command:
+ - Descripción: El patrón Command encapsula una solicitud como un objeto, permitiendo así parametrizar clientes con diferentes solicitudes, encolar o hacer registro de solicitudes, y soportar operaciones reversibles.
+ - Ejemplo: Supongamos que tienes una aplicación de procesamiento de texto donde los usuarios pueden realizar diversas acciones como copiar, pegar o deshacer una operación. Puedes utilizar el patrón Command para encapsular estas acciones como objetos de comando, lo que permite realizar operaciones reversibles y facilita el encolamiento o registro de solicitudes.
+ - Conceptos clave: Encapsulamiento de solicitudes, Operaciones reversibles.
+ - Analogía: Piensa en un control remoto de televisión donde cada botón del control representa una acción específica, como cambiar de canal o ajustar el volumen. Cada botón actúa como un comando encapsulado que envía la solicitud correspondiente a la televisión. El control remoto permite a los usuarios parametrizar sus acciones, encolar o deshacer operaciones.
+
+ 15. Iterator:
+ - Descripción: El patrón Iterator proporciona una forma de acceder secuencialmente a los elementos de una colección sin exponer su representación interna.
+ - Ejemplo: Supongamos que tienes una aplicación de gestión de tareas donde almacenas una lista de tareas pendientes. Puedes utilizar el patrón Iterator para recorrer secuencialmente la lista de tareas sin acceder directamente a su estructura interna.
+ - Conceptos clave: Acceso secuencial, Ocultamiento de la estructura interna.
+ - Analogía: Imagina que tienes una caja de cartas con varias cartas en su interior. Puedes utilizar un índice o puntero para acceder a las cartas una por una sin tener que abrir la caja y revelar su contenido interno.
+
+ 16. Mediator:
+ - Descripción: El patrón Mediator define un objeto que encapsula la comunicación y la interacción entre varios objetos, reduciendo así las dependencias directas entre ellos.
+ - Ejemplo: Supongamos que tienes una aplicación de chat donde varios usuarios pueden enviar mensajes entre sí. Puedes utilizar el patrón Mediator para crear un objeto mediador que controle y coordine la comunicación entre los diferentes usuarios, evitando que los usuarios tengan que comunicarse directamente entre sí.
+ - Conceptos clave: Encapsulamiento de la comunicación, Reducción de dependencias.
+ - Analogía: Piensa en un moderador en un debate donde varios participantes tienen que comunicarse entre sí. El moderador actúa como un mediador que controla y coordina la comunicación, evitando que los participantes se dirijan directamente unos a otros.
+
+ 17. Memento:
+ - Descripción: El patrón Memento permite capturar y almacenar el estado interno de un objeto sin violar su encapsulación, y luego restaurar el objeto a ese estado posteriormente.
+ - Ejemplo: Supongamos que tienes una aplicación de edición de texto donde los usuarios pueden realizar cambios en un documento. Puedes utilizar el patrón Memento para capturar y almacenar diferentes estados del documento, lo que permite a los usuarios deshacer o restaurar los cambios realizados.
+ - Conceptos clave: Captura y almacenamiento del estado, Restauración del estado.
+ - Analogía: Imagina que estás jugando un videojuego y quieres guardar tu progreso en diferentes momentos para poder regresar al punto guardado más tarde. El juego utiliza el patrón Memento para capturar y almacenar el estado actual del juego, permitiéndote restaurar ese estado en el futuro.
+
+ 18. Observer:
+ - Descripción: El patrón Observer establece una relación de uno a muchos entre objetos, de modo que cuando un objeto cambia su estado, notifica y actualiza automáticamente a todos los objetos que dependen de él.
+ - Ejemplo: Supongamos que tienes una aplicación de noticias donde los usuarios pueden suscribirse a diferentes categorías de noticias. Puedes utilizar el patrón Observer para establecer una relación entre los objetos de categoría de noticias y los objetos de suscriptor, de modo que cuando se publique una nueva noticia en una categoría, se notifique automáticamente a todos los suscriptores de esa categoría.
+ - Conceptos clave: Relación uno a muchos, Notificación y actualización automática.
+ - Analogía: Piensa en un sistema de alertas de emergencia en una comunidad. Cuando ocurre una situación de emergencia, el sistema envía automáticamente alertas a todos los residentes que se hayan suscrito a las alertas. Los residentes actúan como observadores que reciben notificaciones y toman las medidas necesarias en función de la información proporcionada.
+
+ 19. State:
+ - Descripción: El patrón State permite que un objeto altere su comportamiento cuando su estado interno cambia. Permite el encapsulamiento de diferentes comportamientos en clases separadas y facilita la adición de nuevos estados sin modificar el código existente.
+ - Ejemplo: Supongamos que tienes una aplicación de reproducción de música donde un reproductor puede estar en diferentes estados, como reproduciendo, en pausa o detenido. Puedes utilizar el patrón State para representar cada estado como una clase separada y permitir que el reproductor cambie su comportamiento según el estado actual.
+ - Conceptos clave: Alteración de comportamiento, Encapsulamiento de estados.
+ - Analogía: Imagina un semáforo de tráfico que cambia su comportamiento según el estado actual. Cuando el semáforo está en verde, permite que los vehículos avancen; cuando está en rojo, detiene el tráfico. El semáforo altera su comportamiento según el estado actual, sin necesidad de modificar su estructura física.
+
+ 20. Strategy:
+ - Descripción: El patrón Strategy permite encapsular diferentes algoritmos en clases separadas, permitiendo que los algoritmos sean intercambiables dentro de un contexto. Esto facilita la adición o modificación de algoritmos sin afectar al contexto que los utiliza.
+ - Ejemplo: Supongamos que tienes una aplicación de navegación donde los usuarios pueden seleccionar diferentes modos de transporte, como caminar, conducir o tomar el transporte público. Puedes utilizar el patrón Strategy para representar cada modo de transporte como una estrategia separada y permitir que el usuario elija la estrategia deseada en el contexto de la navegación.
+ - Conceptos clave: Encapsulamiento de algoritmos, Intercambiabilidad de estrategias.
+ - Analogía: Piensa en una caja de herramientas donde tienes diferentes herramientas para diferentes tareas. Cuando necesitas realizar una tarea específica, seleccionas la herramienta adecuada para esa tarea. Cada herramienta representa una estrategia y puedes intercambiarlas según la tarea que estés realizando.
+
+ 21. Template:
+ - Descripción: El patrón Template define el esqueleto de un algoritmo en una clase base y permite que las subclases implementen ciertos pasos del algoritmo según sea necesario. Permite la reutilización del código común mientras permite que las subclases personalicen partes específicas del algoritmo.
+ - Ejemplo: Supongamos que tienes una aplicación de generación de informes donde necesitas generar informes de diferentes tipos, como informes de ventas, informes financieros, informes de inventario, etc. Puedes utilizar el patrón Template para definir un esqueleto de generación de informes en una clase base y permitir que las subclases implementen los detalles específicos de cada tipo de informe.
+ - Conceptos clave: Esqueleto de algoritmo, Personalización de pasos.
+ - Analogía: Imagina una receta de cocina donde tienes una serie de pasos generales a seguir, pero puedes personalizar ciertos ingredientes o técnicas según tus preferencias. La receta establece el esqueleto del proceso de cocina, pero te permite hacer ajustes y personalizaciones en función de tus necesidades.
+
+ 22. Visitor:
+ - Descripción: El patrón Visitor permite separar los algoritmos de las clases en las que operan, permitiendo agregar nuevos algoritmos sin modificar las clases existentes. Permite realizar operaciones en elementos de una estructura de objetos sin cambiar su estructura interna.
+ - Ejemplo: Supongamos que tienes una aplicación de dibujo donde tienes diferentes formas geométricas, como círculos, cuadrados, triángulos, etc. Puedes utilizar el patrón Visitor para definir un visitante que pueda realizar diferentes operaciones en cada forma, como calcular el área, dibujar el contorno, etc., sin modificar la estructura interna de las formas.
+ - Conceptos clave: Separación de algoritmos, Operaciones en objetos sin modificar su estructura.
+ - Analogía: Piensa en un inspector de seguridad que realiza diferentes verificaciones en diferentes tipos de edificios, como inspeccionar la estructura, revisar los sistemas de seguridad, etc. El inspector de seguridad es capaz de realizar diferentes operaciones en cada tipo de edificio sin cambiar la estructura interna del edificio.
  
  Patrones de arquitectura
  Comunicación entre módulos
