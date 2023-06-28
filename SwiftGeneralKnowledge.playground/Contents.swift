@@ -108,18 +108,70 @@
 
  En resumen, if let y guard let son constructos útiles para trabajar con opcionales en Swift y garantizar un manejo seguro de los valores opcionales. if let se utiliza para realizar acciones específicas cuando un opcional contiene un valor no nulo, mientras que guard let se utiliza para salir tempranamente de un bloque de código si el opcional es nil.
  
+ ********** Static Vars **********
+
+ Las `static vars`, o variables estáticas, son propiedades de una clase específica, en lugar de una instancia de esa clase. Lo que las hace únicas es que solo existen en una copia, sin importar cuántas instancias de la clase crees. Esto significa que si cambias el valor de una variable estática, ese cambio se reflejará en todas las instancias de la clase. Puedes pensar en las variables estáticas como un espacio de almacenamiento común para todas las instancias de una clase.
+
+ ********** Variables Computadas **********
+
+ Las variables computadas son propiedades de una clase o estructura que no almacenan un valor directamente. En cambio, calculan (o "computan") su valor basándose en alguna lógica que tú defines. Por ejemplo, podrías tener una clase `Circle` con variables `radius` y `diameter`. En lugar de almacenar el diámetro como una variable separada, podrías hacer que `diameter` sea una variable computada que simplemente devuelve el radio multiplicado por dos.
+
+ ********** Alternativas a Singleton y sus repercusiones en pruebas **********
+
+ El patrón Singleton es un diseño común que restringe la instanciación de una clase a un solo objeto. Esto puede ser útil en algunos casos, como cuando se necesita un punto de acceso global a un recurso, pero puede tener inconvenientes, especialmente en términos de pruebas. Debido a que Singleton introduce un estado global en la aplicación, puede hacer que las pruebas sean más difíciles de escribir y menos confiables. El estado global puede ser modificado por cualquier parte de la aplicación en cualquier momento, lo que puede llevar a resultados de pruebas inesperados o inconsistentes.
+
+ Las alternativas al patrón Singleton incluyen:
+
+ - **Inyección de dependencia:** En lugar de utilizar una instancia Singleton, puedes pasar las dependencias requeridas como parámetros a las funciones o métodos que las necesitan. Esto hace que las pruebas sean más predecibles y evita la necesidad de un estado global.
+
+ - **Usar instancias por escopo:** En lugar de tener una sola instancia global, puedes tener instancias que existan solo durante un cierto "escopo" o período de vida (por ejemplo, durante la duración de una solicitud específica).
+
+ Estas alternativas pueden hacer que tu código sea más fácil de probar y mantener. Sin embargo, también pueden requerir más trabajo para implementar y pueden no ser adecuadas para todos los casos de uso.
+ 
+ ********** Alta Cohesión y Bajo Acoplamiento -> Reutilizable **********
+
+ Estos son dos principios fundamentales en el diseño de software.
+
+ - **Alta Cohesión**: Se refiere a la idea de que cada módulo o clase en un sistema debería tener una responsabilidad claramente definida y limitada. Debería hacer una cosa y hacerla bien. La alta cohesión facilita la comprensión, el mantenimiento y la modificación de las clases.
+
+ - **Bajo Acoplamiento**: Significa que las diferentes partes de un sistema deberían depender lo menos posible entre sí. En otras palabras, un cambio en una parte del sistema no debería requerir cambios en otra parte del sistema. El bajo acoplamiento facilita la prueba y la reutilización de las clases.
+
+ En general, si un sistema de software se diseña con alta cohesión y bajo acoplamiento, será más fácil de mantener, probar, entender y reutilizar.
+
+ ********** Composite para transición a SwiftUI **********
+
+ El patrón de diseño Composite se utiliza para tratar objetos individuales y composiciones de objetos de manera uniforme. En SwiftUI, esto se ve en cómo las vistas se componen en otras vistas, creando una jerarquía de vistas, donde cada vista puede contener otras vistas. Esto facilita la creación de interfaces de usuario complejas a partir de componentes más pequeños y reutilizables.
+
+ La transición a SwiftUI puede requerir un cambio en la forma de pensar sobre el diseño de la interfaz de usuario, de un enfoque más orientado a objetos a un enfoque más declarativo y funcional. Sin embargo, los beneficios incluyen una mayor reutilización del código, una mayor facilidad para probar y depurar las vistas, y la posibilidad de crear interfaces de usuario más complejas con menos código.
+
+ ********** Notación de Diccionario y Arrays de Múltiples Dimensiones **********
+
+ Un diccionario en Swift es una colección de pares clave-valor, donde cada clave es única. La notación para acceder a los valores en un diccionario es `dictionary[key]`, donde `dictionary` es el nombre del diccionario y `key` es la clave del valor que se desea recuperar.
+
+ Un array de múltiples dimensiones es esencialmente un "array de arrays". Puedes pensar en un array bidimensional (el caso más común de un array de múltiples dimensiones) como una tabla, donde el primer índice determina la fila y el segundo índice determina la columna. Por ejemplo, `multiArray[2][3]` te dará el valor en la tercera fila, cuarta columna (ya que la indexación en Swift comienza en 0) de `multiArray`.
+ 
+ ********** Por qué un Diccionario es Rápido, Complejidad Temporal, Comparación con Otras Estructuras de Datos **********
+
+ Un diccionario es una estructura de datos que almacena pares de elementos clave-valor. Lo que hace que los diccionarios sean rápidos para ciertas operaciones es cómo están implementados bajo el capó: utilizan una técnica llamada "hashing". Cada clave se pasa a través de una función de hash para producir un número que luego se utiliza para buscar el valor correspondiente en el almacenamiento interno del diccionario. Esto permite un acceso a los datos en tiempo constante, O(1), lo que significa que el tiempo que toma buscar un valor no está relacionado con el número de elementos que hay en el diccionario.
+
+ En comparación con otras estructuras de datos, como los arrays o listas enlazadas, que tienen un tiempo de búsqueda de O(n) (donde 'n' es el número de elementos en la lista), los diccionarios pueden ser significativamente más rápidos para buscar datos. Sin embargo, los diccionarios no mantienen el orden de los elementos y no son la mejor elección si necesitas iterar sobre los elementos en un orden específico.
+
+ ********** Proxy para Debug de Llamadas API **********
+
+ Un proxy es un intermediario que puede interceptar las comunicaciones entre tu aplicación y un servidor. Al utilizar un proxy para debug de llamadas API, puedes ver exactamente qué se está enviando y recibiendo, lo que puede ayudarte a identificar y solucionar problemas.
+
+ Un proxy puede permitirte ver detalles como los encabezados HTTP, los cuerpos de las solicitudes y respuestas, los códigos de estado, los tiempos de respuesta y mucho más. Además, algunos proxies incluso te permiten modificar las solicitudes y respuestas, lo que puede ser útil para probar cómo maneja tu aplicación diferentes escenarios.
+
+ ********** Frameworks iOS para Videojuegos **********
+
+ Existen varios frameworks que puedes utilizar para desarrollar videojuegos en iOS. Aquí tienes tres ejemplos:
+
+ - **SpriteKit**: Este es un framework proporcionado por Apple específicamente para el desarrollo de juegos 2D. Proporciona una serie de características útiles, como el manejo de gráficos y animaciones, físicas, detección de colisiones y más.
+
+ - **SceneKit**: Otro framework de Apple, pero este es para juegos 3D. SceneKit incluye una gama de características para la creación de gráficos 3D, efectos visuales y físicas.
+
+ - **Unity**: Este es un motor de juego que se utiliza para el desarrollo de juegos 2D y 3D. Aunque no es específico de iOS (es multiplataforma), es muy popular y poderoso, y se puede utilizar para desarrollar juegos para iOS.
+
+ Cada uno de estos tiene sus propias fortalezas y debilidades, y la elección de cuál usar dependerá de las necesidades específicas de tu juego.
+ 
  */
-
-
-
-
-// Static vars
-// Variables computadas
-// alternativas a singleton y repercusiones en pruebas (xq es antipatron)
-// alta cohesiòn y bajo acoplamiento -> reutilizable
-// Composite para transiciòn a SwiftUI
-// notación de diccionario y arrays de multiples dimensiones
-// Porque un diccionario es rápido, complejidad temporal, comparación con otras estructuras de datos
-// Proxy para debug de llamadas API
-// Frameworks iOS para VideoJuegos
-// VisionPro (2D)
