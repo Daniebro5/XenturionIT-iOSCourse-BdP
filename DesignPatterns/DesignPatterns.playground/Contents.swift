@@ -134,8 +134,7 @@
  
  ********** Patrones de Comportamiento **********
  
- 
- 13. Chain of Responsibility:
+ 13. Chain of Responsibility (Cadena de responsabilidad):
  - Descripción: El patrón Chain of Responsibility permite pasar una solicitud a través de una cadena de objetos receptores, cada uno de los cuales tiene la oportunidad de manejar la solicitud o pasarla al siguiente receptor de la cadena.
  - Ejemplo: Supongamos que tienes una aplicación de soporte al cliente donde los usuarios pueden enviar solicitudes de ayuda. Puedes utilizar el patrón Chain of Responsibility para crear una cadena de manejo de solicitudes, donde cada objeto receptor en la cadena tiene la opción de manejar la solicitud o pasarla al siguiente receptor.
  - Conceptos clave: Cadena de objetos, Manejo de solicitudes.
