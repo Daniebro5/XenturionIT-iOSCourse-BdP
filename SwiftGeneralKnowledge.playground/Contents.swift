@@ -281,6 +281,7 @@ class ChildNonFinalClass: NonFinalClass {
 // indices empiezan en 0 en colecciones
 // plantillas en swift y genericos
 // weak -> ARC (Automatic Reference Counting) -> referencias cíclicas -> deinit
+// private(set) como buena práctica y ayuda para pruebas
 
 class Humano {
     // ARC = 1
@@ -320,3 +321,5 @@ weak var b = Humano()
 // b es nil
 
 // ARC = 0
+
+

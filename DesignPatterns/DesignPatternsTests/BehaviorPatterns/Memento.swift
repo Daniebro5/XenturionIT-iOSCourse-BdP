@@ -11,7 +11,6 @@ import XCTest
 /// defines a method for saving the state inside a memento and another method
 /// for restoring the state from it.
 class Originator {
-
     /// For the sake of simplicity, the originator's state is stored inside a
     /// single variable.
     private var state: String
@@ -51,7 +50,6 @@ class Originator {
 /// such as creation date or name. However, it doesn't expose the Originator's
 /// state.
 protocol Memento {
-
     var name: String { get }
     var date: Date { get }
 }
@@ -61,6 +59,7 @@ protocol Memento {
 class ConcreteMemento: Memento {
 
     /// The Originator uses this method when restoring its state.
+    /// get - set
     private(set) var state: String
     private(set) var date: Date
 
