@@ -164,13 +164,13 @@
  - Conceptos clave: Captura y almacenamiento del estado, Restauración del estado.
  - Analogía: Imagina que estás jugando un videojuego y quieres guardar tu progreso en diferentes momentos para poder regresar al punto guardado más tarde. El juego utiliza el patrón Memento para capturar y almacenar el estado actual del juego, permitiéndote restaurar ese estado en el futuro.
  
- 18. Observer:
+ 18. Observer (Observador):
  - Descripción: El patrón Observer establece una relación de uno a muchos entre objetos, de modo que cuando un objeto cambia su estado, notifica y actualiza automáticamente a todos los objetos que dependen de él.
  - Ejemplo: Supongamos que tienes una aplicación de noticias donde los usuarios pueden suscribirse a diferentes categorías de noticias. Puedes utilizar el patrón Observer para establecer una relación entre los objetos de categoría de noticias y los objetos de suscriptor, de modo que cuando se publique una nueva noticia en una categoría, se notifique automáticamente a todos los suscriptores de esa categoría.
  - Conceptos clave: Relación uno a muchos, Notificación y actualización automática.
  - Analogía: Piensa en un sistema de alertas de emergencia en una comunidad. Cuando ocurre una situación de emergencia, el sistema envía automáticamente alertas a todos los residentes que se hayan suscrito a las alertas. Los residentes actúan como observadores que reciben notificaciones y toman las medidas necesarias en función de la información proporcionada.
  
- 19. State:
+ 19. State (Estado):
  - Descripción: El patrón State permite que un objeto altere su comportamiento cuando su estado interno cambia. Permite el encapsulamiento de diferentes comportamientos en clases separadas y facilita la adición de nuevos estados sin modificar el código existente.
  - Ejemplo: Supongamos que tienes una aplicación de reproducción de música donde un reproductor puede estar en diferentes estados, como reproduciendo, en pausa o detenido. Puedes utilizar el patrón State para representar cada estado como una clase separada y permitir que el reproductor cambie su comportamiento según el estado actual.
  - Conceptos clave: Alteración de comportamiento, Encapsulamiento de estados.

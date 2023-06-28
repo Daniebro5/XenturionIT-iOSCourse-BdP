@@ -282,6 +282,10 @@ class ChildNonFinalClass: NonFinalClass {
 // plantillas en swift y genericos
 // weak -> ARC (Automatic Reference Counting) -> referencias cíclicas -> deinit
 // private(set) como buena práctica y ayuda para pruebas
+// UIDevice
+// Apps para Watch, Widgets, TVOs, MacOS
+// Contexto en programación
+// VisionPro
 
 class Humano {
     // ARC = 1

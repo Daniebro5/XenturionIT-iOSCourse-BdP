@@ -11,7 +11,6 @@ import XCTest
 /// a reference to an instance of a State subclass, which represents the current
 /// state of the Context.
 fileprivate class Context {
-
     /// A reference to the current state of the Context.
     private var state: State
 
