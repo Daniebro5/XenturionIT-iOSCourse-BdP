@@ -188,10 +188,9 @@
  - Conceptos clave: Esqueleto de algoritmo, Personalización de pasos.
  - Analogía: Imagina una receta de cocina donde tienes una serie de pasos generales a seguir, pero puedes personalizar ciertos ingredientes o técnicas según tus preferencias. La receta establece el esqueleto del proceso de cocina, pero te permite hacer ajustes y personalizaciones en función de tus necesidades.
  
- 22. Visitor:
+ 22. Visitor (Visitante):
  - Descripción: El patrón Visitor permite separar los algoritmos de las clases en las que operan, permitiendo agregar nuevos algoritmos sin modificar las clases existentes. Permite realizar operaciones en elementos de una estructura de objetos sin cambiar su estructura interna.
  - Ejemplo: Supongamos que tienes una aplicación de dibujo donde tienes diferentes formas geométricas, como círculos, cuadrados, triángulos, etc. Puedes utilizar el patrón Visitor para definir un visitante que pueda realizar diferentes operaciones en cada forma, como calcular el área, dibujar el contorno, etc., sin modificar la estructura interna de las formas.
  - Conceptos clave: Separación de algoritmos, Operaciones en objetos sin modificar su estructura.
  - Analogía: Piensa en un inspector de seguridad que realiza diferentes verificaciones en diferentes tipos de edificios, como inspeccionar la estructura, revisar los sistemas de seguridad, etc. El inspector de seguridad es capaz de realizar diferentes operaciones en cada tipo de edificio sin cambiar la estructura interna del edificio.
- 
  */

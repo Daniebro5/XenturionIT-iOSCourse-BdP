@@ -10,7 +10,6 @@ import XCTest
 /// The Component interface declares an `accept` method that should take the
 /// base visitor interface as an argument.
 fileprivate protocol Component {
-
     func accept(_ visitor: Visitor)
 }
 
@@ -49,7 +48,6 @@ class ConcreteComponentB: Component {
 /// component classes. The signature of a visiting method allows the visitor to
 /// identify the exact class of the component that it's dealing with.
 protocol Visitor {
-
     func visitConcreteComponentA(element: ConcreteComponentA)
     func visitConcreteComponentB(element: ConcreteComponentB)
 }
