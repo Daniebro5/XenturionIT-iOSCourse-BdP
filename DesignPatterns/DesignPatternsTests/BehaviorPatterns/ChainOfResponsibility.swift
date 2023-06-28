@@ -42,7 +42,7 @@ class MonkeyHandler: Handler {
     var nextHandler: Handler?
 
     func handle(request: String) -> String? {
-        if (request == "Banana") {
+        if request == "Banana" {
             return "Monkey: I'll eat the " + request + ".\n"
         } else {
             return nextHandler?.handle(request: request)
@@ -56,7 +56,7 @@ class SquirrelHandler: Handler {
 
     func handle(request: String) -> String? {
 
-        if (request == "Nut") {
+        if request == "Nut" {
             return "Squirrel: I'll eat the " + request + ".\n"
         } else {
             return nextHandler?.handle(request: request)
@@ -69,7 +69,7 @@ class DogHandler: Handler {
     var nextHandler: Handler?
 
     func handle(request: String) -> String? {
-        if (request == "MeatBall") {
+        if request == "MeatBall" {
             return "Dog: I'll eat the " + request + ".\n"
         } else {
             return nextHandler?.handle(request: request)

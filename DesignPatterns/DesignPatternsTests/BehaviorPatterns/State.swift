@@ -10,7 +10,7 @@ import XCTest
 /// The Context defines the interface of interest to clients. It also maintains
 /// a reference to an instance of a State subclass, which represents the current
 /// state of the Context.
-class Context {
+fileprivate class Context {
 
     /// A reference to the current state of the Context.
     private var state: State
@@ -41,7 +41,7 @@ class Context {
 /// implement and also provides a backreference to the Context object,
 /// associated with the State. This backreference can be used by States to
 /// transition the Context to another State.
-protocol State: class {
+fileprivate protocol State: AnyObject {
 
     func update(context: Context)
 
@@ -49,7 +49,7 @@ protocol State: class {
     func handle2()
 }
 
-class BaseState: State {
+fileprivate class BaseState: State {
 
     private(set) weak var context: Context?
 
@@ -63,7 +63,7 @@ class BaseState: State {
 
 /// Concrete States implement various behaviors, associated with a state of the
 /// Context.
-class ConcreteStateA: BaseState {
+fileprivate class ConcreteStateA: BaseState {
 
     override func handle1() {
         print("ConcreteStateA handles request1.")
@@ -76,7 +76,7 @@ class ConcreteStateA: BaseState {
     }
 }
 
-class ConcreteStateB: BaseState {
+fileprivate class ConcreteStateB: BaseState {
 
     override func handle1() {
         print("ConcreteStateB handles request1.\n")

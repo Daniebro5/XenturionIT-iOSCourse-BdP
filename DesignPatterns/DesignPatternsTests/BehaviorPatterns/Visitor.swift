@@ -9,7 +9,7 @@ import XCTest
 
 /// The Component interface declares an `accept` method that should take the
 /// base visitor interface as an argument.
-protocol Component {
+fileprivate protocol Component {
 
     func accept(_ visitor: Visitor)
 }
@@ -86,7 +86,7 @@ class ConcreteVisitor2: Visitor {
 /// The client code can run visitor operations over any set of elements without
 /// figuring out their concrete classes. The accept operation directs a call to
 /// the appropriate operation in the visitor object.
-class Client {
+fileprivate class Client {
     // ...
     static func clientCode(components: [Component], visitor: Visitor) {
         // ...

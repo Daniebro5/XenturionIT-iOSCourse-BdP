@@ -273,3 +273,5 @@ class ChildNonFinalClass: NonFinalClass {
  Cada uno de estos tiene sus propias fortalezas y debilidades, y la elección de cuál usar dependerá de las necesidades específicas de tu juego.
  
  */
+
+// @discardableResult -> diferentes anotaciones '@'
