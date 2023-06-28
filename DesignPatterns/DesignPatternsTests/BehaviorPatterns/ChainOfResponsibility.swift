@@ -106,7 +106,6 @@ class ChainOfResponsibilityConceptual: XCTestCase {
     func test() {
 
         /// The other part of the client code constructs the actual chain.
-
         let monkey = MonkeyHandler()
         let squirrel = SquirrelHandler()
         let dog = DogHandler()

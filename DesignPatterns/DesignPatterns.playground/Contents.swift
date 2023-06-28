@@ -140,19 +140,19 @@
  - Conceptos clave: Cadena de objetos, Manejo de solicitudes.
  - Analogía: Imagina que trabajas en un departamento de atención al cliente y recibes una consulta de un cliente. Si no puedes responder a la consulta, la reenvías a otro departamento más especializado que pueda manejarla. La consulta pasa a través de una cadena de responsabilidad hasta que es manejada adecuadamente.
  
- 14. Command:
+ 14. Command (Comando):
  - Descripción: El patrón Command encapsula una solicitud como un objeto, permitiendo así parametrizar clientes con diferentes solicitudes, encolar o hacer registro de solicitudes, y soportar operaciones reversibles.
  - Ejemplo: Supongamos que tienes una aplicación de procesamiento de texto donde los usuarios pueden realizar diversas acciones como copiar, pegar o deshacer una operación. Puedes utilizar el patrón Command para encapsular estas acciones como objetos de comando, lo que permite realizar operaciones reversibles y facilita el encolamiento o registro de solicitudes.
  - Conceptos clave: Encapsulamiento de solicitudes, Operaciones reversibles.
  - Analogía: Piensa en un control remoto de televisión donde cada botón del control representa una acción específica, como cambiar de canal o ajustar el volumen. Cada botón actúa como un comando encapsulado que envía la solicitud correspondiente a la televisión. El control remoto permite a los usuarios parametrizar sus acciones, encolar o deshacer operaciones.
  
- 15. Iterator:
+ 15. Iterator (Iterador):
  - Descripción: El patrón Iterator proporciona una forma de acceder secuencialmente a los elementos de una colección sin exponer su representación interna.
  - Ejemplo: Supongamos que tienes una aplicación de gestión de tareas donde almacenas una lista de tareas pendientes. Puedes utilizar el patrón Iterator para recorrer secuencialmente la lista de tareas sin acceder directamente a su estructura interna.
  - Conceptos clave: Acceso secuencial, Ocultamiento de la estructura interna.
  - Analogía: Imagina que tienes una caja de cartas con varias cartas en su interior. Puedes utilizar un índice o puntero para acceder a las cartas una por una sin tener que abrir la caja y revelar su contenido interno.
  
- 16. Mediator:
+ 16. Mediator (Mediador):
  - Descripción: El patrón Mediator define un objeto que encapsula la comunicación y la interacción entre varios objetos, reduciendo así las dependencias directas entre ellos.
  - Ejemplo: Supongamos que tienes una aplicación de chat donde varios usuarios pueden enviar mensajes entre sí. Puedes utilizar el patrón Mediator para crear un objeto mediador que controle y coordine la comunicación entre los diferentes usuarios, evitando que los usuarios tengan que comunicarse directamente entre sí.
  - Conceptos clave: Encapsulamiento de la comunicación, Reducción de dependencias.

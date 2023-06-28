@@ -275,3 +275,48 @@ class ChildNonFinalClass: NonFinalClass {
  */
 
 // @discardableResult -> diferentes anotaciones '@'
+// lazy vars
+// defer
+// a++ - ++a
+// indices empiezan en 0 en colecciones
+// plantillas en swift y genericos
+// weak -> ARC (Automatic Reference Counting) -> referencias cíclicas -> deinit
+
+class Humano {
+    // ARC = 1
+    var perro: Perro
+    
+    init(perro: Perro) {
+        self.perro = perro
+    }
+    
+    // ARC = 0 ahí se ejecuta
+    deinit {
+        print("el objeto ya no existe en memoria")
+    }
+}
+
+class Perro {
+    var humano: Humano
+    // ARC = 1
+    
+    init(humano: Humano) {
+        self.humano = humano
+    }
+}
+
+// ARC = 0
+// referencia Strong
+let perro = Perro(humano: Humano())
+let a = Humano(perro: perro)
+
+// ARC = 1
+a = nil
+
+// ARC = 0 -> libera de memoria a Humano
+
+// ARC = 0
+weak var b = Humano()
+// b es nil
+
+// ARC = 0

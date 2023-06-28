@@ -11,7 +11,6 @@ import XCTest
 /// mediator about various events. The Mediator may react to these events and
 /// pass the execution to other components.
 protocol Mediator: AnyObject {
-
     func notify(sender: BaseComponent, event: String)
 }
 
@@ -34,8 +33,7 @@ class ConcreteMediator: Mediator {
         if event == "A" {
             print("Mediator reacts on A and triggers following operations:")
             self.component2.doC()
-        }
-        else if (event == "D") {
+        } else if event == "D" {
             print("Mediator reacts on D and triggers following operations:")
             self.component1.doB()
             self.component2.doC()
