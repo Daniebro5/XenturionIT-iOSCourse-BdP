@@ -176,13 +176,13 @@
  - Conceptos clave: Alteración de comportamiento, Encapsulamiento de estados.
  - Analogía: Imagina un semáforo de tráfico que cambia su comportamiento según el estado actual. Cuando el semáforo está en verde, permite que los vehículos avancen; cuando está en rojo, detiene el tráfico. El semáforo altera su comportamiento según el estado actual, sin necesidad de modificar su estructura física.
  
- 20. Strategy:
+ 20. Strategy (Estrategia):
  - Descripción: El patrón Strategy permite encapsular diferentes algoritmos en clases separadas, permitiendo que los algoritmos sean intercambiables dentro de un contexto. Esto facilita la adición o modificación de algoritmos sin afectar al contexto que los utiliza.
  - Ejemplo: Supongamos que tienes una aplicación de navegación donde los usuarios pueden seleccionar diferentes modos de transporte, como caminar, conducir o tomar el transporte público. Puedes utilizar el patrón Strategy para representar cada modo de transporte como una estrategia separada y permitir que el usuario elija la estrategia deseada en el contexto de la navegación.
  - Conceptos clave: Encapsulamiento de algoritmos, Intercambiabilidad de estrategias.
  - Analogía: Piensa en una caja de herramientas donde tienes diferentes herramientas para diferentes tareas. Cuando necesitas realizar una tarea específica, seleccionas la herramienta adecuada para esa tarea. Cada herramienta representa una estrategia y puedes intercambiarlas según la tarea que estés realizando.
  
- 21. Template:
+ 21. Template (Plantilla):
  - Descripción: El patrón Template define el esqueleto de un algoritmo en una clase base y permite que las subclases implementen ciertos pasos del algoritmo según sea necesario. Permite la reutilización del código común mientras permite que las subclases personalicen partes específicas del algoritmo.
  - Ejemplo: Supongamos que tienes una aplicación de generación de informes donde necesitas generar informes de diferentes tipos, como informes de ventas, informes financieros, informes de inventario, etc. Puedes utilizar el patrón Template para definir un esqueleto de generación de informes en una clase base y permitir que las subclases implementen los detalles específicos de cada tipo de informe.
  - Conceptos clave: Esqueleto de algoritmo, Personalización de pasos.

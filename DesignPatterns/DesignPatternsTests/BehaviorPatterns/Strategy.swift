@@ -42,14 +42,12 @@ fileprivate class Context {
 /// The Context uses this interface to call the algorithm defined by Concrete
 /// Strategies.
 protocol Strategy {
-
     func doAlgorithm<T: Comparable>(_ data: [T]) -> [T]
 }
 
 /// Concrete Strategies implement the algorithm while following the base
 /// Strategy interface. The interface makes them interchangeable in the Context.
 class ConcreteStrategyA: Strategy {
-
     func doAlgorithm<T: Comparable>(_ data: [T]) -> [T] {
         return data.sorted()
     }
