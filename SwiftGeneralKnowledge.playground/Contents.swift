@@ -96,6 +96,57 @@ private class PrivateClass {
  Siempre marcar una clase, método o propiedad como final no es una buena práctica en todos los casos. Debe considerarse cuidadosamente si se requiere o no la posibilidad de herencia o sobrescritura en el diseño de tu código. Si no se necesita herencia o sobrescritura, es recomendable marcar las clases, métodos o propiedades como final para evitar errores y garantizar un diseño más seguro. Sin embargo, si se desea permitir la herencia o sobrescritura en el futuro, se puede omitir el uso de la palabra final inicialmente y agregarla posteriormente según sea necesario.
  
  En resumen, la palabra `final` en Swift es importante para controlar la herencia y sobrescritura en tus clases, métodos y propiedades. Su uso adecuado puede mejorar el rendimiento, el tiempo de compilación y promover un diseño seguro y encapsulado. Sin embargo, es importante evaluar cuidadosamente si se requiere o no en función de los requisitos del diseño y la flexibilidad futura del código.
+ */
+
+// Clase final - No puede ser heredada
+final class FinalClass {
+    var nonFinalProperty = "Non Final Property"
+    
+    final var finalProperty = "Final Property" // Propiedad final - No puede ser sobrescrita
+    var property = "Property"
+    
+    final func finalMethod() { // Método final - No puede ser sobrescrito
+        print("Final Method in Final Class")
+    }
+    
+    func nonFinalMethod() {
+        print("Non Final Method in Final Class")
+    }
+}
+
+class NonFinalClass {
+    final var finalProperty = "Final Property" // Propiedad final - No puede ser sobrescrita
+    var nonFinalProperty = "Non Final Property"
+    
+    final func finalMethod() { // Método final - No puede ser sobrescrito
+        print("Final Method in Non Final Class")
+    }
+    
+    func nonFinalMethod() {
+        print("Non Final Method in Non Final Class")
+    }
+}
+
+// Error: Las clases marcadas como 'final' no pueden ser heredadas
+class ChildClass: FinalClass {}
+
+// Error: Las propiedades y métodos marcados como 'final' no pueden ser sobrescritos
+class ChildNonFinalClass: NonFinalClass {
+    override var finalProperty: String {
+        didSet {
+            print("Trying to override final property")
+        }
+    }
+    
+    override func finalMethod() {
+        print("Trying to override final method")
+    }
+}
+
+/*
+ En el ejemplo anterior, verás que la clase FinalClass está marcada como final, lo que significa que ninguna otra clase puede heredar de ella. De manera similar, la propiedad finalProperty y el método finalMethod en la clase NonFinalClass también están marcados como final, por lo que no pueden ser sobrescritos por las clases que heredan de NonFinalClass.
+ 
+ Los intentos de heredar de una clase final o de sobrescribir una propiedad o método final darán lugar a errores de compilación. Estos son ejemplos de cómo la palabra clave final puede utilizarse para controlar la herencia y la sobrescritura en Swift.
  
  **************** Preferencia del isEmpty frente al .count *****************
  
