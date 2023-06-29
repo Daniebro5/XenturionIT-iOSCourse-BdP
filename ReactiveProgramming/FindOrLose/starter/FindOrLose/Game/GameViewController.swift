@@ -46,11 +46,14 @@
  
  */
 
-import 
+import Combine
 import UIKit
 
 final class GameViewController: UIViewController {
   // MARK: - Variables
+  
+  // DisposeBag en Rx
+  var subscriptions: Set<AnyCancellable> = []
 
   var gameState: GameState = .stop {
     didSet {
@@ -120,59 +123,17 @@ final class GameViewController: UIViewController {
 
     resetImages()
     startLoaders()
-
-    UnsplashAPI.randomImage { [unowned self] randomImageResponse in
-      guard let randomImageResponse = randomImageResponse else {
-        DispatchQueue.main.async {
-          self.gameState = .stop
-        }
-
-        return
+    
+    // 1
+    let firstImage = UnsplashAPI.randomImage()
+    // 2
+    // [[Int]] -> [[String]]
+    // [[Int]] -> [Int]
+    // [Int?] -> [Int]
+    // Esperar
+      .flatMap { randomImageResponse in
+        ImageDownloader.download(url: randomImageResponse.urls.regular)
       }
-
-      ImageDownloader.download(url: randomImageResponse.urls.regular) { [unowned self] image in
-        guard let image = image else { return }
-
-        self.gameImages.append(image)
-
-        UnsplashAPI.randomImage { [unowned self] randomImageResponse in
-          guard let randomImageResponse = randomImageResponse else {
-            DispatchQueue.main.async {
-              self.gameState = .stop
-            }
-
-            return
-          }
-
-          ImageDownloader.download(url: randomImageResponse.urls.regular) { [unowned self] image in
-            guard let image = image else { return }
-
-            self.gameImages.append(contentsOf: [image, image, image])
-            self.gameImages.shuffle()
-
-            DispatchQueue.main.async {
-              self.gameScoreLabel.text = "Score: \(self.gameScore)"
-
-              self.gameTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [unowned self] timer in
-                DispatchQueue.main.async {
-                  self.gameScoreLabel.text = "Score: \(self.gameScore)"
-                }
-                self.gameScore -= 10
-
-                if self.gameScore <= 0 {
-                  self.gameScore = 0
-                  
-                  timer.invalidate()
-                }
-              }
-
-              self.stopLoaders()
-              self.setImages()
-            }
-          }
-        }
-      }
-    }
   }
 
   func stopGame() {
