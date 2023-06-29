@@ -52,6 +52,7 @@ import UIKit
 final class GameViewController: UIViewController {
   // MARK: - Variables
   var subscriptions: Set<AnyCancellable> = []
+  var gameTimer: AnyCancellable?
 
   var gameState: GameState = .stop {
     didSet {
@@ -65,7 +66,6 @@ final class GameViewController: UIViewController {
   }
 
   var gameImages: [UIImage] = []
-  var gameTimer: Timer?
   var gameLevel = 0
   var gameScore = 0
 
@@ -109,7 +109,7 @@ final class GameViewController: UIViewController {
   // MARK: - Game Functions
 
   func playGame() {
-    gameTimer?.invalidate()
+    gameTimer?.cancel()
 
     gameStateButton.setTitle("Stop", for: .normal)
 
@@ -145,7 +145,21 @@ final class GameViewController: UIViewController {
         self.gameImages = [first, second, second, second].shuffled()
         self.gameScoreLabel.text = "Score: \(self.gameScore)"
         
-        // TODO: Handle game score
+        // 1
+        self.gameTimer = Timer.publish(every: 0.1, on: RunLoop.main, in: .common)
+        // 2
+          .autoconnect()
+        // 3
+          .sink(receiveValue: { [unowned self] _ in
+            self.gameScoreLabel.text = "Score: \(self.gameScore)"
+            self.gameScore -= 10
+            
+            if self.gameScore <= 0 {
+              self.gameScore = 0
+              
+              self.gameTimer?.cancel()
+            }
+          })
         
         self.stopLoaders()
         self.setImages()
