@@ -1,5 +1,3 @@
-import UIKit
-
 // Publishers -> Cosas que producen valores
 // Operadores -> Cosas que mutan los valores
 // Subscribers -> Cosas que reciben los valores
@@ -47,6 +45,9 @@ import UIKit
  let Subscriberx2 = Publisher().map( $0 x 2 ).subscribe(_:)
  
  */
+
+import 
+import UIKit
 
 final class GameViewController: UIViewController {
   // MARK: - Variables

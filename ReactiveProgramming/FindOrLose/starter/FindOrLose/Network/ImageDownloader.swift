@@ -3,8 +3,8 @@ import Foundation
 import UIKit
 
 enum ImageDownloader {
+  
   static func download(url: String) -> AnyPublisher<UIImage, GameError> {
-    // 1
     guard let url = URL(string: url) else {
       return Fail(error: GameError.invalidURL)
         .eraseToAnyPublisher()
