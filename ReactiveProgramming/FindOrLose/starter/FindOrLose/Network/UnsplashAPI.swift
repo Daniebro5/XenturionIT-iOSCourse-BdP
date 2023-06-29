@@ -1,9 +1,10 @@
+import Combine
 import Foundation
 
 enum UnsplashAPI {
   static let accessToken = "cc7GedxmlLLX3fqYFoWiyoPSLeDkT9_7Jz5bgFg1LVY"
 
-  static func randomImage(completion: @escaping (RandomImageResponse?) -> Void) {
+  static func randomImage() -> AnyPublisher<RandomImageResponse, GameError> {
     let url = URL(string: "https://api.unsplash.com/photos/random/?client_id=\(accessToken)")!
 
     let config = URLSessionConfiguration.default
@@ -13,18 +14,20 @@ enum UnsplashAPI {
 
     var urlRequest = URLRequest(url: url)
     urlRequest.addValue("Accept-Version", forHTTPHeaderField: "v1")
-
-    session.dataTask(with: urlRequest) { data, response, error in
-      guard
-        let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-        let data = data, error == nil,
-        let decodedResponse = try? JSONDecoder().decode(RandomImageResponse.self, from: data)
+    
+    return session.dataTaskPublisher(for: urlRequest)
+      .tryMap { response in
+        guard
+          let httpURLResponse = response.response as? HTTPURLResponse,
+            httpURLResponse.statusCode == 200
         else {
-          completion(nil)
-          return
+          throw GameError.statusCode
+        }
+        return response.data
       }
-
-      completion(decodedResponse)
-    }.resume()
+      .decode(type: RandomImageResponse.self,
+              decoder: JSONDecoder())
+      .mapError { GameError.map($0) }
+      .eraseToAnyPublisher()
   }
 }
