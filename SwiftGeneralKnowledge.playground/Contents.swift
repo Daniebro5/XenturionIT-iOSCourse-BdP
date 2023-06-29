@@ -161,8 +161,47 @@ class ChildNonFinalClass: NonFinalClass {
  4. Adaptabilidad a diferentes tipos de colecciones: `isEmpty` es una propiedad común a varias colecciones en Swift, como arrays, sets y strings. Al utilizar `isEmpty`, tu código será más genérico y adaptable, ya que no dependerá de la estructura específica de la colección para realizar la verificación de vaciedad.
  
  En resumen, utilizar `isEmpty` en lugar de `count == 0` en Swift proporciona una mayor expresividad, mejor semántica, posible eficiencia y adaptabilidad a diferentes tipos de colecciones. Es una práctica recomendada para mejorar la legibilidad y claridad del código al verificar si una colección está vacía.
- 
- 
+ */
+
+// Ejemplo con un Array
+let array = [1, 2, 3, 4, 5]
+
+// Verificar si el Array está vacío utilizando count
+if array.count == 0 {
+    print("El array está vacío.")
+} else {
+    print("El array tiene elementos.")
+}
+
+// Verificar si el Array está vacío utilizando isEmpty
+if array.isEmpty {
+    print("El array está vacío.")
+} else {
+    print("El array tiene elementos.")
+}
+
+// Ejemplo con un String
+let string = "Hello, world!"
+
+// Verificar si el String está vacío utilizando count
+if string.count == 0 {
+    print("El string está vacío.")
+} else {
+    print("El string tiene caracteres.")
+}
+
+// Verificar si el String está vacío utilizando isEmpty
+if string.isEmpty {
+    print("El string está vacío.")
+} else {
+    print("El string tiene caracteres.")
+}
+
+/*
+ En estos ejemplos, el uso de isEmpty hace que el código sea más claro y legible. Es inmediatamente obvio que estamos verificando si el array o el string están vacíos, en lugar de comparar el número de elementos o caracteres con cero. Además, en algunos casos, isEmpty puede ser más eficiente que count == 0, ya que Swift puede optimizar la verificación de vacío sin tener que contar todos los elementos o caracteres.
+ */
+
+/*
  ******************* Opcionales ********************
  
  En Swift, los opcionales son un concepto fundamental que permite manejar valores que pueden estar presentes o ausentes. Puedes pensar en los opcionales como una "caja" que puede contener un valor o estar vacía, es decir, no tener ningún valor en su interior.
