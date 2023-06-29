@@ -1,6 +1,54 @@
 import UIKit
 
-class GameViewController: UIViewController {
+// Publishers -> Cosas que producen valores
+// Operadores -> Cosas que mutan los valores
+// Subscribers -> Cosas que reciben los valores
+
+/*
+ *********** Publishers ************
+ Objetos que se adieren al protocolo Publisher, y generan una secuencia de valores en el tiempo.
+ T: ----------A-----------B-------CD--------F----------X Error
+ T: ----------A-----------B-------CD--------F----------| Terminado
+ 
+ Error: protocolo Failure
+ A,B,CD,F: Output
+ 
+ ************ Operadores *************
+ Son funciones especiales que se llaman sobre los publishers para retornar el mismo o un diferente publisher. Una descripción de como cambiar los valores de un Publisher.
+ 
+ T: -------1------2-------3-------4-------5--------|
+ O: Operador(x2)
+ T: -------2------4-------6-------8-------10--------|
+ 
+ T: -------1------2-------3-------4-------5--------|
+ O: Operador(filtroPar)
+ T: -------1--------------3---------------5--------|
+ 
+ .filter()
+ .multiplyx2
+ .add1
+ .........
+ 
+ Entre las operaciones están pero no limitadas a: Cambiar valores, sumar valores, remover valores (filtrar), añadir valores, etc.
+ 
+ ************* Suscriptores ************
+ Publishers y operadores no tendrían razón de ser si no hay alguien escuchando, o suscrito; el suscriptor es una clase aderida al protocolo Subscriber
+ 
+ Puede recibir valores (Output), Error o una señal de terminación.
+ 
+ 
+ ************ Implementación *************
+ 
+ Publisher()          Publisher().subscribe(_:)
+  |                   |
+ T: ------------------A---------B-----C------X
+ 
+ let SubscriberSinPares = Publisher().filterSinPares().subscribe(_:)
+ let Subscriberx2 = Publisher().map( $0 x 2 ).subscribe(_:)
+ 
+ */
+
+final class GameViewController: UIViewController {
   // MARK: - Variables
 
   var gameState: GameState = .stop {
