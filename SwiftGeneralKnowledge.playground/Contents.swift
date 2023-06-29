@@ -812,3 +812,5 @@ print(counter.count)  // Imprime: 1
 // [self] -> ARC + 1 self.propiedad
 // [weak self] -> ARC -> self?.propiedad
 // [unowned self] -> ARC -> self.propiedad
+// suscribirse y cancelar subscripciones
+// Set, Hashmaps, maps y arrays

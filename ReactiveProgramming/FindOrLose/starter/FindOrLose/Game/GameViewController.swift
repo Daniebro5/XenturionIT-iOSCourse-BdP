@@ -144,12 +144,8 @@ final class GameViewController: UIViewController {
       } receiveValue: { [unowned self] (first, second) in
         self.gameImages = [first, second, second, second].shuffled()
         self.gameScoreLabel.text = "Score: \(self.gameScore)"
-        
-        // 1
         self.gameTimer = Timer.publish(every: 0.1, on: RunLoop.main, in: .common)
-        // 2
           .autoconnect()
-        // 3
           .sink(receiveValue: { [unowned self] _ in
             self.gameScoreLabel.text = "Score: \(self.gameScore)"
             self.gameScore -= 10
@@ -168,7 +164,7 @@ final class GameViewController: UIViewController {
   }
 
   func stopGame() {
-    gameTimer?.invalidate()
+    gameTimer?.cancel()
 
     gameStateButton.setTitle("Play", for: .normal)
 
