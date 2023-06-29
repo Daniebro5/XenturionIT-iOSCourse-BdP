@@ -292,14 +292,131 @@ print(nombreDelJefe) // imprimirá "nil"
  La diferencia principal entre if let y guard let radica en el alcance de las variables desempaquetadas. Con if let, la variable desempaquetada solo es válida dentro del bloque de código donde se realiza la asignación. En cambio, con guard let, la variable desempaquetada es válida en todo el alcance del bloque que contiene el guard, lo que te permite utilizarla más adelante en el código.
  
  En resumen, if let y guard let son constructos útiles para trabajar con opcionales en Swift y garantizar un manejo seguro de los valores opcionales. if let se utiliza para realizar acciones específicas cuando un opcional contiene un valor no nulo, mientras que guard let se utiliza para salir tempranamente de un bloque de código si el opcional es nil.
+ */
+
+// Ejemplo de uso de if let
+
+// Tenemos un String opcional
+var saludoOpcional: String? = "Hola, mundo"
+
+// Utilizamos if let para desempaquetar el valor
+if let saludo = saludoOpcional {
+    print(saludo) // Imprimirá "Hola, mundo"
+} else {
+    print("No hay un saludo para imprimir")
+}
+
+// Ahora ponemos saludoOpcional a nil
+saludoOpcional = nil
+
+// Si intentamos desempaquetar de nuevo, nos lleva al bloque else
+if let saludo = saludoOpcional {
+    print(saludo)
+} else {
+    print("No hay un saludo para imprimir") // Imprimirá "No hay un saludo para imprimir"
+}
+
+// Ejemplo de uso de guard let
+
+func imprimirSaludo(saludoOpcional: String?) {
+    // Usamos guard let para desempaquetar el valor
+    guard let saludo = saludoOpcional else {
+        print("No hay un saludo para imprimir")
+        return
+    }
+    
+    // Si llegamos aquí, es porque el saludoOpcional tenía un valor
+    print(saludo)
+}
+
+// Probamos nuestra función con un valor no nil
+imprimirSaludo(saludoOpcional: "Hola, mundo") // Imprimirá "Hola, mundo"
+
+// Y probamos nuestra función con nil
+imprimirSaludo(saludoOpcional: nil) // Imprimirá "No hay un saludo para imprimir"
+
+/*
+ Estos ejemplos ilustran cómo usar if let y guard let para trabajar con valores opcionales. if let desempaqueta un opcional y realiza acciones solo si el opcional tiene un valor, mientras que guard let desempaqueta un opcional y permite una salida temprana de la función si el opcional es nil. En ambos casos, se evita un error al intentar desempaquetar un valor opcional que es nil.
  
  ********** Static Vars **********
  
  Las `static vars`, o variables estáticas, son propiedades de una clase específica, en lugar de una instancia de esa clase. Lo que las hace únicas es que solo existen en una copia, sin importar cuántas instancias de la clase crees. Esto significa que si cambias el valor de una variable estática, ese cambio se reflejará en todas las instancias de la clase. Puedes pensar en las variables estáticas como un espacio de almacenamiento común para todas las instancias de una clase.
+ */
+
+// Definimos una clase de Ejemplo
+class Ejemplo {
+    // Definimos una variable estática
+    static var contador: Int = 0
+    
+    // Un método que incrementa el contador
+    func incrementarContador() {
+        Ejemplo.contador += 1
+    }
+}
+
+// Creamos la primera instancia de Ejemplo
+let ejemplo1 = Ejemplo()
+
+// Incrementamos el contador utilizando ejemplo1
+ejemplo1.incrementarContador()
+
+// Imprimimos el valor de contador. Debería ser 1.
+print(Ejemplo.contador) // Imprimirá 1
+
+// Creamos una segunda instancia de Ejemplo
+let ejemplo2 = Ejemplo()
+
+// Incrementamos el contador utilizando ejemplo2
+ejemplo2.incrementarContador()
+
+// Imprimimos el valor de contador. Aunque hemos utilizado una nueva instancia, el contador se ha incrementado a 2.
+print(Ejemplo.contador) // Imprimirá 2
+
+/*
+ 
+ En este ejemplo, contador es una variable estática en la clase Ejemplo. Cuando llamamos al método incrementarContador() en una instancia de Ejemplo, en realidad estamos modificando la variable estática contador de la clase. Como resultado, no importa cuántas instancias de Ejemplo creemos, todas comparten y pueden modificar la misma variable contador. Esto demuestra cómo las variables estáticas son comunes a todas las instancias de una clase y son útiles cuando quieres tener un estado compartido entre todas las instancias.
  
  ********** Variables Computadas **********
  
  Las variables computadas son propiedades de una clase o estructura que no almacenan un valor directamente. En cambio, calculan (o "computan") su valor basándose en alguna lógica que tú defines. Por ejemplo, podrías tener una clase `Circle` con variables `radius` y `diameter`. En lugar de almacenar el diámetro como una variable separada, podrías hacer que `diameter` sea una variable computada que simplemente devuelve el radio multiplicado por dos.
+ */
+
+// Definimos una clase Circle
+class Circle {
+    // Creamos una variable de instancia para el radio
+    var radius: Double
+    
+    // Creamos una variable computada para el diámetro
+    var diameter: Double {
+        get {
+            return radius * 2
+        }
+        set(newDiameter) {
+            radius = newDiameter / 2
+        }
+    }
+    
+    // Inicializador para la clase Circle
+    init(radius: Double) {
+        self.radius = radius
+    }
+}
+
+// Creamos una instancia de Circle con un radio de 5
+let circle = Circle(radius: 5)
+
+// Imprimimos el diámetro utilizando nuestra variable computada. Debería ser 10.
+print(circle.diameter) // Imprimirá 10.0
+
+// Ahora cambiamos el diámetro a 20 utilizando nuestra variable computada.
+circle.diameter = 20
+
+// Si imprimimos el radio y el diámetro, veremos que ambos se han actualizado.
+print(circle.radius) // Imprimirá 10.0
+print(circle.diameter) // Imprimirá 20.0
+
+/*
+ En este ejemplo, diameter es una variable computada que está basada en el valor de radius. Cuando accedemos a diameter, obtenemos el valor de radius multiplicado por dos. Cuando establecemos diameter, actualizamos el valor de radius a la mitad del nuevo diámetro. Esto demuestra cómo puedes utilizar variables computadas en Swift para manejar propiedades que son dependientes o derivadas de otras propiedades.
  
  ********** Alternativas a Singleton y sus repercusiones en pruebas **********
  
@@ -334,6 +451,33 @@ print(nombreDelJefe) // imprimirá "nil"
  Un diccionario en Swift es una colección de pares clave-valor, donde cada clave es única. La notación para acceder a los valores en un diccionario es `dictionary[key]`, donde `dictionary` es el nombre del diccionario y `key` es la clave del valor que se desea recuperar.
  
  Un array de múltiples dimensiones es esencialmente un "array de arrays". Puedes pensar en un array bidimensional (el caso más común de un array de múltiples dimensiones) como una tabla, donde el primer índice determina la fila y el segundo índice determina la columna. Por ejemplo, `multiArray[2][3]` te dará el valor en la tercera fila, cuarta columna (ya que la indexación en Swift comienza en 0) de `multiArray`.
+ */
+
+// Creación de un diccionario con claves de tipo String y valores de tipo Int
+var ages = ["Juan": 27, "María": 25, "Pedro": 30]
+
+// Accediendo a un valor utilizando la clave
+if let ageJuan = ages["Juan"] {
+    print("Juan tiene \(ageJuan) años.") // Imprimirá: Juan tiene 27 años.
+} else {
+    print("No se encontró la edad de Juan.")
+}
+
+// Añadiendo un nuevo par clave-valor al diccionario
+ages["Ana"] = 33
+
+// Creación de un array de dos dimensiones de tipo Int
+var matrix: [[Int]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+// Accediendo a un valor utilizando dos índices
+let value = matrix[1][2] // Esto te dará el valor 6, que se encuentra en la segunda fila, tercera columna.
+print(value) // Imprimirá: 6
+
+// Actualizando un valor en el array
+matrix[0][1] = 10
+
+/*
+ En estos ejemplos, puedes ver cómo acceder y actualizar valores en un diccionario y un array de múltiples dimensiones en Swift. En el caso del diccionario, utilizamos las claves para acceder a los valores. En el caso del array de múltiples dimensiones, utilizamos dos índices para acceder a los valores: el primer índice para la fila y el segundo índice para la columna.
  
  ********** Por qué un Diccionario es Rápido, Complejidad Temporal, Comparación con Otras Estructuras de Datos **********
  
