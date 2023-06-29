@@ -217,7 +217,55 @@ if string.isEmpty {
  Puedes utilizar diferentes técnicas para trabajar con opcionales en Swift, como el uso de declaraciones `if let` o el operador de encadenamiento opcional (`optional chaining`). Estas técnicas te permiten desempaquetar el valor de un opcional solo si está presente y realizar acciones basadas en esa condición.
  
  En resumen, los opcionales en Swift te permiten manejar la incertidumbre sobre si un valor está presente o no. Utilizando la analogía de una caja que puede contener un regalo o estar vacía, puedes comprender cómo los opcionales te ayudan a manejar y trabajar de manera segura con valores opcionales en Swift.
- 
+ */
+
+// Ejemplo de uso de opcionales
+
+// Declaramos un String opcional
+var nombreOpcional: String? = "Juan"
+
+// Intentar imprimir el nombre directamente resultará en una advertencia, ya que es opcional
+print(nombreOpcional) // imprimirá "Optional("Juan")"
+
+// Podemos utilizar "if let" para desempaquetar el valor del opcional
+if let nombre = nombreOpcional {
+    print("Hola, \(nombre)") // imprimirá "Hola, Juan"
+} else {
+    print("No tengo un nombre para saludar.")
+}
+
+// Ahora establecemos el nombreOpcional a nil
+nombreOpcional = nil
+
+// Si intentamos desempaquetar de nuevo, el valor nil nos llevará al bloque else
+if let nombre = nombreOpcional {
+    print("Hola, \(nombre)")
+} else {
+    print("No tengo un nombre para saludar.") // imprimirá "No tengo un nombre para saludar."
+}
+
+// Un ejemplo de encadenamiento opcional
+
+// Imaginemos que tenemos una estructura que puede tener un jefe, pero el jefe es opcional
+struct Empleado {
+    var jefe: Jefe?
+}
+
+struct Jefe {
+    var nombre: String
+}
+
+// Creamos un empleado sin un jefe
+let empleadoSinJefe = Empleado(jefe: nil)
+
+// Intentamos acceder al nombre del jefe utilizando encadenamiento opcional
+let nombreDelJefe = empleadoSinJefe.jefe?.nombre
+
+// Como el empleado no tiene un jefe, el resultado es nil
+print(nombreDelJefe) // imprimirá "nil"
+
+/*
+ Estos ejemplos muestran cómo manejar los opcionales en Swift. En el primer ejemplo, utilizamos if let para desempaquetar el valor de un opcional y manejar los casos en los que el opcional contiene un valor y cuando no lo hace. En el segundo ejemplo, utilizamos encadenamiento opcional para acceder a una propiedad de un valor opcional, que nos devuelve otro opcional. Esto nos permite manejar de forma segura el caso en el que la propiedad a la que estamos intentando acceder no existe.
  
  ******************* Uso de IF LET y GUARD LET con opcionales *****************
  
