@@ -806,3 +806,9 @@ print(counter.count)  // Imprime: 1
  
  Por lo tanto, aunque la programación básica es similar en todas estas plataformas, los desarrolladores deben considerar las diferencias en el diseño de la interfaz de usuario, las interacciones del usuario y las capacidades específicas de cada plataforma al crear aplicaciones para iOS, watchOS, macOS y tvOS.
  */
+
+
+// capture list
+// [self] -> ARC + 1 self.propiedad
+// [weak self] -> ARC -> self?.propiedad
+// [unowned self] -> ARC -> self.propiedad

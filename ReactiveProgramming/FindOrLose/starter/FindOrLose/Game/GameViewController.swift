@@ -51,8 +51,6 @@ import UIKit
 
 final class GameViewController: UIViewController {
   // MARK: - Variables
-  
-  // DisposeBag en Rx
   var subscriptions: Set<AnyCancellable> = []
 
   var gameState: GameState = .stop {
@@ -124,16 +122,35 @@ final class GameViewController: UIViewController {
     resetImages()
     startLoaders()
     
-    // 1
     let firstImage = UnsplashAPI.randomImage()
-    // 2
-    // [[Int]] -> [[String]]
-    // [[Int]] -> [Int]
-    // [Int?] -> [Int]
-    // Esperar
       .flatMap { randomImageResponse in
         ImageDownloader.download(url: randomImageResponse.urls.regular)
       }
+    
+    let secondImage = UnsplashAPI.randomImage()
+      .flatMap { randomImageResponse in
+        ImageDownloader.download(url: randomImageResponse.urls.regular)
+      }
+    
+    firstImage.zip(secondImage)
+      .receive(on: DispatchQueue.main)
+      .sink { [unowned self] completion in
+        switch completion {
+        case .finished: break
+        case .failure(let error):
+          print("Error \(error)")
+          self.gameState = .stop
+        }
+      } receiveValue: { [unowned self] (first, second) in
+        self.gameImages = [first, second, second, second].shuffled()
+        self.gameScoreLabel.text = "Score: \(self.gameScore)"
+        
+        // TODO: Handle game score
+        
+        self.stopLoaders()
+        self.setImages()
+      }
+      .store(in: &subscriptions)
   }
 
   func stopGame() {
