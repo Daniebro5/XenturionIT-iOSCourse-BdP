@@ -503,58 +503,306 @@ matrix[0][1] = 10
  
  Cada uno de estos tiene sus propias fortalezas y debilidades, y la elección de cuál usar dependerá de las necesidades específicas de tu juego.
  
+ ************* Anotaciones en Swift **************
+ 
+ En Swift, las anotaciones con '@' se utilizan para proporcionar metadatos adicionales o modificar el comportamiento de los elementos de código a los que se aplican. Aquí te presento algunas de estas anotaciones y su uso:
+ 
+ 1. @discardableResult
+ 
+ La anotación @discardableResult se utiliza cuando una función o método devuelve un valor que puede ser ignorado. Es decir, si llamas a esta función o método y no utilizas su valor de retorno, no recibirás una advertencia del compilador.
+ 
+ Por ejemplo, digamos que tienes una función que suma dos números y devuelve el resultado:
  */
 
-// @discardableResult -> diferentes anotaciones '@'
-// lazy vars
-// defer
-// a++ - ++a
-// indices empiezan en 0 en colecciones
-// plantillas en swift y genericos
-// weak -> ARC (Automatic Reference Counting) -> referencias cíclicas -> deinit
-// private(set) como buena práctica y ayuda para pruebas
-// UIDevice
-// Apps para Watch, Widgets, TVOs, MacOS
-// Contexto en programación
-// VisionPro
+func sum(_ a: Int, _ b: Int) -> Int {
+    return a + b
+}
 
-class Humano {
-    // ARC = 1
-    var perro: Perro
-    
-    init(perro: Perro) {
-        self.perro = perro
-    }
-    
-    // ARC = 0 ahí se ejecuta
-    deinit {
-        print("el objeto ya no existe en memoria")
+// Si llamas a esta función sin usar su valor de retorno, recibirás una advertencia del compilador
+sum(3, 5)
+
+// Para evitar esta advertencia, puedes añadir @discardableResult a la definición de la función:
+@discardableResult
+func sum(_ a: Int, _ b: Int) -> Int {
+    return a + b
+}
+
+// Ahora puedes llamar a la función sin usar su valor de retorno y no recibirás una advertencia
+sum(3, 5)
+
+
+/*
+ 2. @escaping
+ 
+ El atributo @escaping se utiliza para indicar que una closure se invocará después de que la función en la que se pasa como parámetro haya terminado. Por defecto, las closures son @nonescaping, lo que significa que la closure debe completarse antes de que termine la función.
+ 
+ Por ejemplo, si estás haciendo una llamada de red y tienes una closure que manejará el resultado cuando la llamada de red termine, esa closure sería @escaping porque se ejecutará después de que la función de la llamada de red haya terminado.
+ */
+
+func fetchData(completion: @escaping (Data?) -> Void) {
+    // Simulando una llamada de red
+    DispatchQueue.global().async {
+        let data = ... // Obtener los datos
+        DispatchQueue.main.async {
+            completion(data)
+        }
     }
 }
 
-class Perro {
-    var humano: Humano
-    // ARC = 1
-    
-    init(humano: Humano) {
-        self.humano = humano
+/*
+ 3. @autoclosure
+ 
+ El atributo @autoclosure se utiliza para envolver automáticamente una expresión en una closure cuando se pasa a una función. Esto puede hacer que el código sea más limpio y más fácil de leer.
+ 
+ Por ejemplo, puedes tener una función que acepte una closure que no tenga parámetros y devuelva un Booleano:
+ */
+
+func logIfTrue(predicate: () -> Bool) {
+    if predicate() {
+        print("El resultado es verdadero")
     }
 }
 
-// ARC = 0
-// referencia Strong
-let perro = Perro(humano: Humano())
-let a = Humano(perro: perro)
+// Llamar a la función con una closure sería así
+logIfTrue(predicate: { return 2 > 1 })
 
-// ARC = 1
-a = nil
+// Si añades @autoclosure a la definición de la función, Swift envolverá automáticamente { return 2 > 1 } en una closure, por lo que puedes llamar a la función como si estuvieras pasando el resultado de 2 > 1 directamente:
 
-// ARC = 0 -> libera de memoria a Humano
+func logIfTrue(@autoclosure predicate: () -> Bool) {
+    if predicate() {
+        print("El resultado es verdadero")
+    }
+}
 
-// ARC = 0
-weak var b = Humano()
-// b es nil
+// Ahora puedes llamar a la función de esta manera, lo cual es más limpio y fácil de leer
+logIfTrue(predicate: 2 > 1)
 
-// ARC = 0
+/*
+ Estas son solo algunas de las anotaciones con '@' que puedes encontrar en Swift. Existen muchas más, cada una con sus propios usos y propósitos.
+ 
+ *************** Lazy Vars *****************
+ 
+ Las lazy vars o variables perezosas son una característica de Swift que permite retrasar la creación de un objeto o el cálculo de un valor hasta que se utiliza por primera vez. Esto puede ser útil cuando la inicialización de un objeto es costosa en términos de memoria o tiempo de CPU y puede que no se necesite el objeto en absoluto, dependiendo de cómo fluye el programa.
+ 
+ Vamos a tomar un ejemplo sencillo para entender cómo funciona.
+ */
+
+class ExpensiveObject {
+    init() {
+        print("Objeto costoso creado!")
+    }
+}
+
+class MyClass {
+    lazy var expensiveObject = ExpensiveObject()
+    
+    init() {
+        print("MyClass inicializado")
+    }
+}
+
+let myClass = MyClass() // imprimirá "MyClass inicializado"
+
+//En este caso, la inicialización de MyClass no iniciará la creación de ExpensiveObject. Pero, tan pronto como accedamos a expensiveObject, se creará:
+print(myClass.expensiveObject) // imprimirá "Objeto costoso creado!"
+
+/*
+ ************** Defer ****************
+ 
+ El bloque defer en Swift es una forma de especificar un bloque de código que debe ejecutarse cuando se termina la ejecución del alcance en el que se encuentra, sin importar cómo se termina ese alcance. Esto puede ser muy útil para limpiar o liberar recursos, cerrar archivos, invalidar timers, etc., garantizando que estas tareas se realizarán sin importar cómo se sale de la función, método, bucle, etc.
+ 
+ Por ejemplo, considera un escenario donde estás manejando un archivo:
+ */
+
+func processFile(filename: String) throws {
+    let file = openFile(filename)
+    defer {
+        closeFile(file)
+    }
+    while let line = try file.readline() {
+        // Procesa la línea
+    }
+    // closeFile se llama aquí, al final del alcance
+}
+
+/*
+ En este caso, el método closeFile(_:) se llama al final del alcance de la función processFile(_:), sin importar cómo se sale de la función. Si todas las líneas del archivo se procesan con éxito, closeFile(_:) se llama. Si se lanza un error al procesar una línea, closeFile(_:) también se llama. Esto garantiza que el archivo siempre se cerrará, evitando así posibles fugas de recursos.
+ 
+ Otra cosa que vale la pena mencionar es que los bloques defer se ejecutan en el orden inverso al que se definen. Así, si tienes varios bloques defer en tu función, el último definido será el primero en ejecutarse.
+ */
 
 
+func deferExample() {
+    defer { print("1") }
+    defer { print("2") }
+    defer { print("3") }
+}
+deferExample()
+// Imprimirá:
+// 3
+// 2
+// 1
+
+/*
+ En resumen, defer te proporciona una manera segura de asegurarte de que ciertos bloques de código siempre se ejecutan antes de que se termine un alcance, lo que es especialmente útil para la limpieza o liberación de recursos.
+ 
+ ***************** Operadores A++ y ++A ******************
+ 
+ Hasta la versión Swift 2.2, el lenguaje Swift soportaba los operadores de incremento ++ y --. Sin embargo, estos operadores fueron descontinuados en Swift 3.0 y versiones posteriores. En lugar de usar a++ y ++a (y sus equivalentes de decremento a-- y --a), Swift ahora promueve el uso de a += 1 y a -= 1.
+ 
+ El motivo principal de este cambio es mejorar la claridad y la consistencia del lenguaje. a++ y a-- se consideran menos claros que a += 1 y a -= 1, especialmente para los nuevos programadores que pueden no estar familiarizados con la semántica de ++ y -- desde otros lenguajes.
+ 
+ Aquí tienes un ejemplo de cómo incrementar y decrementar una variable en Swift:
+ */
+
+var a = 0
+
+// Incremento
+a += 1
+print(a) // Imprime 1
+
+// Decremento
+a -= 1
+print(a) // Imprime 0
+
+/*
+ Así que en resumen, en Swift actual, a++ y ++a no son válidos, y se deben utilizar a += 1 y a -= 1 para incrementar y decrementar respectivamente.
+ 
+ *************** Indices en Colecciones *****************
+ 
+ En Swift, al igual que en muchos otros lenguajes de programación, los índices de las colecciones (como los arrays) comienzan en 0. Esto significa que el primer elemento de una colección se encuentra en la posición 0, el segundo elemento se encuentra en la posición 1, el tercer elemento se encuentra en la posición 2, y así sucesivamente.
+ 
+ Esta es una convención de la mayoría de los lenguajes de programación que proviene de la forma en que los computadores almacenan la información en la memoria.
+ 
+ Aquí te dejo un ejemplo simple para ilustrar este concepto:
+ */
+
+var frutas = ["Manzana", "Banana", "Cereza", "Durazno", "Uva"]
+
+print(frutas[0]) // Imprime "Manzana"
+print(frutas[1]) // Imprime "Banana"
+print(frutas[2]) // Imprime "Cereza"
+print(frutas[3]) // Imprime "Durazno"
+print(frutas[4]) // Imprime "Uva"
+
+/*
+ En este ejemplo, el array frutas tiene cinco elementos. El primer elemento, "Manzana", está en el índice 0. El último elemento, "Uva", está en el índice 4, no en el índice 5, aunque "Uva" sea el quinto elemento del array.
+ 
+ Es importante recordar que intentar acceder a un índice que no existe en el array (como frutas[5] en este ejemplo) causará un error en tiempo de ejecución. Por esta razón, siempre es importante asegurarte de que el índice esté dentro del rango válido de la colección.
+ 
+ **************** Genericos ******************
+ 
+ Los genéricos son una poderosa característica de Swift que te permite escribir código flexible y reutilizable. A través de los genéricos, puedes escribir funciones y tipos que pueden trabajar con cualquier tipo, mientras aún conservas la seguridad de tipos que Swift proporciona.
+ 
+ Imagina que estás escribiendo una función para intercambiar los valores de dos variables. Podrías escribir una función para cada tipo de datos, pero eso sería repetitivo y poco práctico. Aquí es donde los genéricos son útiles. En lugar de escribir una función para cada tipo de dato, puedes escribir una única función genérica.
+ 
+ Aquí hay un ejemplo:
+ */
+
+func intercambiaValores<T>(a: inout T, b: inout T) {
+    let valorTemporal = a
+    a = b
+    b = valorTemporal
+}
+
+var numero1 = 100
+var numero2 = 200
+
+print("Antes del intercambio: \(numero1), \(numero2)") // Antes del intercambio: 100, 200
+intercambiaValores(a: &numero1, b: &numero2)
+print("Después del intercambio: \(numero1), \(numero2)") // Después del intercambio: 200, 100
+
+var cadena1 = "Hola"
+var cadena2 = "Mundo"
+
+print("Antes del intercambio: \(cadena1), \(cadena2)") // Antes del intercambio: Hola, Mundo
+intercambiaValores(a: &cadena1, b: &cadena2)
+print("Después del intercambio: \(cadena1), \(cadena2)") // Después del intercambio: Mundo, Hola
+
+/*
+ En este ejemplo, T es un marcador de posición para cualquier tipo. Cuando llamas a intercambiaValores(a: &numero1, b: &numero2), T es reemplazado por Int, y cuando llamas a intercambiaValores(a: &cadena1, b: &cadena2), T es reemplazado por String. De este modo, puedes usar la misma función para intercambiar valores de diferentes tipos de datos.
+ 
+ Además de las funciones, también puedes usar genéricos para definir tus propias clases, estructuras y enumeraciones genéricas. Esto puede hacer que tu código sea más flexible y reutilizable.
+ 
+ 
+ ******************* ARC *********************
+ 
+ Swift utiliza un sistema llamado Automatic Reference Counting (ARC) para hacer un seguimiento y manejar la memoria de las instancias de las clases. ARC se asegura de que las instancias no sean desasignadas mientras aún están en uso, pero también asegura que las instancias que ya no están en uso sean liberadas para liberar memoria.
+ 
+ Las referencias cíclicas pueden causar problemas en ARC. Una referencia cíclica ocurre cuando dos o más instancias se mantienen mutuamente en memoria porque tienen referencias fuertes entre sí. En otras palabras, no pueden ser desasignadas porque cada una de ellas tiene al menos una referencia fuerte que la mantiene viva.
+ 
+ Para resolver este problema, Swift proporciona dos formas de crear referencias débiles o no propietarias: weak y unowned. Estas referencias permiten referirse a instancias sin mantenerlas en memoria de forma fuerte, evitando así las referencias cíclicas.
+ 
+ Las referencias weak se utilizan cuando la referencia puede llegar a ser nil en algún momento. Se deben declarar como opcionales y se establecerán en nil automáticamente cuando la instancia a la que se refieren es desasignada.
+ 
+ Aquí un ejemplo:
+ */
+
+class Persona {
+    let nombre: String
+    init(nombre: String) { self.nombre = nombre }
+    var mascota: Mascota?
+    deinit { print("\(nombre) está siendo desasignado.") }
+}
+
+class Mascota {
+    let nombre: String
+    weak var dueño: Persona?
+    init(nombre: String) { self.nombre = nombre }
+    deinit { print("\(nombre) está siendo desasignado.") }
+}
+
+do {
+    let juan = Persona(nombre: "Juan")
+    let fido = Mascota(nombre: "Fido")
+    juan.mascota = fido
+    fido.dueño = juan
+}
+
+/*
+ En este ejemplo, Persona tiene una referencia fuerte a Mascota y Mascota tiene una referencia débil a Persona. Cuando el bloque do termina, juan y fido quedan fuera de alcance y son desasignados. Si Mascota tuviera una referencia fuerte a Persona, tendríamos una referencia cíclica y ni juan ni fido serían desasignados.
+ 
+ Por último, deinit es un desinicializador que es llamado justo antes de que una instancia de una clase sea desasignada. En este ejemplo, deinit se utiliza para imprimir un mensaje cuando Persona y Mascota son desasignados. Esto ayuda a demostrar que ARC está funcionando correctamente y que las instancias son desasignadas cuando ya no están en uso.
+ 
+ ************* private(set) **************
+ 
+ El modificador private(set) es una práctica común en Swift para mejorar la encapsulación y controlar la mutabilidad de las propiedades de una clase o estructura. Es especialmente útil cuando quieres que una propiedad sea de solo lectura fuera de su propia definición de clase o estructura, pero necesita ser modificada internamente.
+ 
+ La ventaja de usar private(set) es que previene cambios no controlados en la propiedad desde fuera de la clase o estructura, pero aún permite que la propiedad sea modificada dentro de la definición de la misma. Esto puede ayudar a mantener la integridad de tus datos y evitar errores difíciles de detectar.
+ 
+ Además, private(set) puede facilitar las pruebas unitarias de tu código. Puedes probar el comportamiento de tu clase o estructura basándote en los valores observados de las propiedades private(set), sin preocuparte de que estos valores sean modificados por accidente durante las pruebas.
+ 
+ Aquí hay un ejemplo simple de cómo puedes usar private(set):
+ */
+
+class Counter {
+    private(set) var count = 0
+    func increment() {
+        count += 1
+    }
+}
+
+let counter = Counter()
+counter.increment()
+print(counter.count)  // Imprime: 1
+// counter.count = 5  // Esto causaría un error de compilación
+
+/*
+ En este ejemplo, Counter tiene una propiedad count que solo puede ser modificada internamente. La función increment puede modificar count, pero si intentas cambiar count directamente desde fuera de Counter, obtendrás un error de compilación. Esto asegura que el valor de count solo cambie de la manera que tú has definido en la clase Counter, que en este caso es incrementándolo en 1 cada vez que llamas a la función increment.
+ 
+ ****************** Progrmación iOS, Watch, Widgets, TVOS, MacOS ********************
+ 
+ Programar aplicaciones para iOS, watchOS, macOS y tvOS puede ser bastante similar en muchos aspectos, ya que todos utilizan Swift y muchas de las mismas bibliotecas y patrones de diseño, como el diseño MVC (Modelo-Vista-Controlador) y las vistas basadas en UIKit o SwiftUI. Sin embargo, también hay diferencias importantes a tener en cuenta, tanto en términos de funcionalidades como de las mejores prácticas de diseño e interacción del usuario. Aquí hay una descripción general de algunas de las diferencias clave:
+ 
+ 1. **iOS (iPhone y iPad)**: La programación de aplicaciones para iOS suele ser la más versátil. Las aplicaciones pueden ser diseñadas para funcionar tanto en modo retrato como en modo paisaje, y las interfaces suelen ser más complejas que en otras plataformas debido al tamaño de la pantalla. Los desarrolladores de iOS necesitan considerar cómo manejar múltiples tamaños de pantalla y adaptarse a las interacciones basadas en el tacto.
+ 
+ 2. **watchOS (Apple Watch)**: Las aplicaciones para watchOS están diseñadas para adaptarse a una pantalla mucho más pequeña. Estas aplicaciones suelen proporcionar funcionalidades muy centradas y simplificadas, ya que los usuarios generalmente interactúan con ellas durante periodos de tiempo más cortos. Además, las aplicaciones para watchOS pueden aprovechar las capacidades únicas del Apple Watch, como los sensores de salud y fitness.
+ 
+ 3. **Widgets**: Los widgets de iOS son extensiones de aplicaciones que muestran información y funcionalidades básicas en la pantalla de inicio del usuario. Debido a su naturaleza y ubicación, los widgets deben ser simples, claros y proporcionar valor inmediato. No son aplicaciones completas, sino complementos de las mismas.
+ 
+ 4. **tvOS (Apple TV)**: Las aplicaciones de tvOS están diseñadas para una pantalla de televisión y se controlan con el Apple TV Remote, por lo que las interacciones son diferentes a las de las aplicaciones para dispositivos de pantalla táctil. El diseño de la interfaz de usuario debe ser más simple y fácil de navegar desde lejos, y el contenido debe estar optimizado para una experiencia de visualización de alta definición.
+ 
+ 5. **macOS (Mac)**: Aunque macOS comparte muchas similitudes con iOS, las aplicaciones de Mac suelen ser más robustas y completas, ya que tienen más potencia de procesamiento y más espacio en la pantalla. Las interacciones del usuario también son diferentes, ya que se basan principalmente en el uso del teclado y el ratón en lugar de la pantalla táctil.
+ 
+ Por lo tanto, aunque la programación básica es similar en todas estas plataformas, los desarrolladores deben considerar las diferencias en el diseño de la interfaz de usuario, las interacciones del usuario y las capacidades específicas de cada plataforma al crear aplicaciones para iOS, watchOS, macOS y tvOS.
+ */
