@@ -15,7 +15,9 @@ struct CurrentWeatherView: View {
     
     var body: some View {
         List(content: content)
-            .onAppear(perform: viewModel.refresh)
+            .task {
+                viewModel.refresh()
+            }
             .navigationTitle(viewModel.city)
             .navigationBarTitleDisplayMode(.large)
             .listStyle(.grouped)
