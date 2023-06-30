@@ -6,6 +6,7 @@
 import Combine
 import SwiftUI
 
+
 class WeeklyWeatherViewModel: ObservableObject, Identifiable {
     
     @Published var city: String = ""
@@ -14,9 +15,19 @@ class WeeklyWeatherViewModel: ObservableObject, Identifiable {
     private let weatherFetcher: WeatherFetchable
     private var cancellables = Set<AnyCancellable>()
     
-    init(weatherFetcher: WeatherFetcher) {
-        self.weatherFetcher = weatherFetcher
+    init(
+      weatherFetcher: WeatherFetchable,
+      scheduler: DispatchQueue = DispatchQueue(label: "WeatherViewModel")
+    ) {
+      self.weatherFetcher = weatherFetcher
+        
+      $city
+        .dropFirst(1)
+        .debounce(for: .seconds(0.5), scheduler: scheduler)
+        .sink(receiveValue: fetchWeather(forCity:))
+        .store(in: &cancellables)
     }
+
     
     func fetchWeather(forCity city: String) {
       weatherFetcher.weeklyWeatherForecast(forCity: city)
@@ -40,4 +51,13 @@ class WeeklyWeatherViewModel: ObservableObject, Identifiable {
         })
         .store(in: &cancellables)
     }
+}
+
+extension WeeklyWeatherViewModel {
+  var currentWeatherView: some View {
+    return WeeklyWeatherBuilder.makeCurrentWeatherView(
+      withCity: city,
+      weatherFetcher: weatherFetcher
+    )
+  }
 }
