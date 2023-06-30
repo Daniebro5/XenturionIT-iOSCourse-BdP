@@ -8,19 +8,27 @@ import SwiftUI
 struct CurrentWeatherView: View {
     
     @ObservedObject var viewModel: CurrentWeatherViewModel
+    @State var refresh: Bool = false
     
     init(viewModel: CurrentWeatherViewModel) {
         self.viewModel = viewModel
     }
     
     var body: some View {
-        List(content: content)
-            .task {
+        VStack {
+            List(content: content)
+                .task {
+                    viewModel.refresh()
+                }
+                .navigationTitle(viewModel.city)
+                .navigationBarTitleDisplayMode(.large)
+                .listStyle(.grouped)
+            Button("Refresh") {
+                refresh.toggle()
                 viewModel.refresh()
             }
-            .navigationTitle(viewModel.city)
-            .navigationBarTitleDisplayMode(.large)
-            .listStyle(.grouped)
+        }
+        
     }
 }
 
