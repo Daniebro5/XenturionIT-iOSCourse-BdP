@@ -916,3 +916,6 @@ class MyClass {
  
  En resumen, las capture lists en Swift son una forma de especificar cómo se deben capturar y mantener las referencias a self en un closure. Es importante entender cómo funcionan para evitar problemas de memoria y garantizar que tu código es seguro y eficiente.
  */
+
+// CodingKeys y reglas complejas
+// Cedula si viene como entero y si tiene 0 es un digito menos al inicio
