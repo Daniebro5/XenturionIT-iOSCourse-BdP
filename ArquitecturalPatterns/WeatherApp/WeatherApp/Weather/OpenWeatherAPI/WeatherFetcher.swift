@@ -7,98 +7,135 @@ import Foundation
 import Combine
 
 protocol WeatherFetchable {
-  func weeklyWeatherForecast(
-    forCity city: String
-  ) -> AnyPublisher<WeeklyForecastResponse, WeatherError>
-
-  func currentWeatherForecast(
-    forCity city: String
-  ) -> AnyPublisher<CurrentWeatherForecastResponse, WeatherError>
+    func weeklyWeatherForecast(
+        forCity city: String
+    ) -> AnyPublisher<WeeklyForecastResponse, WeatherError>
+    
+    func currentWeatherForecast(
+        forCity city: String
+    ) -> AnyPublisher<CurrentWeatherForecastResponse, WeatherError>
 }
 
 class WeatherFetcher {
-  private let session: URLSession
-  
-  init(session: URLSession = .shared) {
-    self.session = session
-  }
+    private let session: URLSession
+    
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
+    
+    func fetchWeather(forCity city: String) {
+      // 1
+      weatherFetcher.weeklyWeatherForecast(forCity: city)
+        .map { response in
+          // 2
+          response.list.map(DailyWeatherRowViewModel.init)
+        }
+
+        // 3
+        .map(Array.removeDuplicates)
+
+        // 4
+        .receive(on: DispatchQueue.main)
+
+        // 5
+        .sink(
+          receiveCompletion: { [weak self] value in
+            guard let self = self else { return }
+            switch value {
+            case .failure:
+              // 6
+              self.dataSource = []
+            case .finished:
+              break
+            }
+          }, receiveValue: { [weak self] forecast in
+            guard let self = self else { return }
+
+            // 7
+            self.dataSource = forecast
+        })
+
+        // 8
+        .store(in: &cancellables)
+    }
+
 }
 
 // MARK: - WeatherFetchable
 extension WeatherFetcher: WeatherFetchable {
-  func weeklyWeatherForecast(
-    forCity city: String
-  ) -> AnyPublisher<WeeklyForecastResponse, WeatherError> {
-    return forecast(with: makeWeeklyForecastComponents(withCity: city))
-  }
-
-  func currentWeatherForecast(
-    forCity city: String
-  ) -> AnyPublisher<CurrentWeatherForecastResponse, WeatherError> {
-    return forecast(with: makeCurrentDayForecastComponents(withCity: city))
-  }
-
-  private func forecast<T>(
-    with components: URLComponents
-  ) -> AnyPublisher<T, WeatherError> where T: Decodable {
-    guard let url = components.url else {
-      let error = WeatherError.network(description: "Couldn't create URL")
-      return Fail(error: error).eraseToAnyPublisher()
+    func weeklyWeatherForecast(
+        forCity city: String
+    ) -> AnyPublisher<WeeklyForecastResponse, WeatherError> {
+        return forecast(with: makeWeeklyForecastComponents(withCity: city))
     }
-
-    return session.dataTaskPublisher(for: URLRequest(url: url))
-      .mapError { error in
-        .network(description: error.localizedDescription)
-      }
-      .flatMap(maxPublishers: .max(1)) { pair in
-        decode(pair.data)
-      }
-      .eraseToAnyPublisher()
-  }
+    
+    func currentWeatherForecast(
+        forCity city: String
+    ) -> AnyPublisher<CurrentWeatherForecastResponse, WeatherError> {
+        return forecast(with: makeCurrentDayForecastComponents(withCity: city))
+    }
+    
+    private func forecast<T>(
+        with components: URLComponents
+    ) -> AnyPublisher<T, WeatherError> where T: Decodable {
+        guard let url = components.url else {
+            let error = WeatherError.network(description: "Couldn't create URL")
+            return Fail(error: error).eraseToAnyPublisher()
+        }
+        
+        return session.dataTaskPublisher(for: URLRequest(url: url))
+            .mapError { error in
+                    .network(description: error.localizedDescription)
+            }
+            .flatMap(maxPublishers: .max(1)) { pair in
+                decode(pair.data)
+            }
+            .eraseToAnyPublisher()
+    }
 }
 
 // MARK: - OpenWeatherMap API
 private extension WeatherFetcher {
-  struct OpenWeatherAPI {
-    static let scheme = "https"
-    static let host = "api.openweathermap.org"
-    static let path = "/data/2.5"
-    static let key = "3c6b220a86b03613ca34d289f90b6ceb"
-  }
-  
-  func makeWeeklyForecastComponents(
-    withCity city: String
-  ) -> URLComponents {
-    var components = URLComponents()
-    components.scheme = OpenWeatherAPI.scheme
-    components.host = OpenWeatherAPI.host
-    components.path = OpenWeatherAPI.path + "/forecast"
+    struct OpenWeatherAPI {
+        static let scheme = "https"
+        static let host = "api.openweathermap.org"
+        static let path = "/data/2.5"
+        static let key = "3c6b220a86b03613ca34d289f90b6ceb"
+    }
     
-    components.queryItems = [
-      URLQueryItem(name: "q", value: city),
-      URLQueryItem(name: "mode", value: "json"),
-      URLQueryItem(name: "units", value: "metric"),
-      URLQueryItem(name: "APPID", value: OpenWeatherAPI.key)
-    ]
+    func makeWeeklyForecastComponents(
+        withCity city: String
+    ) -> URLComponents {
+        var components = URLComponents()
+        components.scheme = OpenWeatherAPI.scheme
+        components.host = OpenWeatherAPI.host
+        components.path = OpenWeatherAPI.path + "/forecast"
+        
+        components.queryItems = [
+            URLQueryItem(name: "q", value: city),
+            URLQueryItem(name: "mode", value: "json"),
+            URLQueryItem(name: "units", value: "metric"),
+            URLQueryItem(name: "APPID", value: OpenWeatherAPI.key)
+        ]
+        
+        return components
+    }
     
-    return components
-  }
-  
-  func makeCurrentDayForecastComponents(
-    withCity city: String
-  ) -> URLComponents {
-    var components = URLComponents()
-    components.scheme = OpenWeatherAPI.scheme
-    components.host = OpenWeatherAPI.host
-    components.path = OpenWeatherAPI.path + "/weather"
-    
-    components.queryItems = [
-      URLQueryItem(name: "q", value: city),
-      URLQueryItem(name: "mode", value: "json"),
-      URLQueryItem(name: "units", value: "metric"),
-      URLQueryItem(name: "APPID", value: OpenWeatherAPI.key)
-    ]
-    
-    return components
-  }
+    func makeCurrentDayForecastComponents(
+        withCity city: String
+    ) -> URLComponents {
+        var components = URLComponents()
+        components.scheme = OpenWeatherAPI.scheme
+        components.host = OpenWeatherAPI.host
+        components.path = OpenWeatherAPI.path + "/weather"
+        
+        components.queryItems = [
+            URLQueryItem(name: "q", value: city),
+            URLQueryItem(name: "mode", value: "json"),
+            URLQueryItem(name: "units", value: "metric"),
+            URLQueryItem(name: "APPID", value: OpenWeatherAPI.key)
+        ]
+        
+        return components
+    }
 }
