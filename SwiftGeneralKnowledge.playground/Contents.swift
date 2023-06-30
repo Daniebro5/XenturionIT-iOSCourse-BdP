@@ -809,13 +809,13 @@ print(counter.count)  // Imprime: 1
  ******************** Capture List en Closures ********************
  
  Las capture lists en los closures de Swift se utilizan para definir las reglas de propiedad y captura de los valores y referencias utilizados dentro de los closures. Estas son particularmente importantes para prevenir referencias cíclicas fuertes que pueden causar fugas de memoria.
-
+ 
  Veamos un ejemplo de cómo usar una capture list:
  */
 
 class MyClass {
     var value = 0
-
+    
     func setupClosure() -> () -> Void {
         // Capturamos self de manera débil para evitar una referencia cíclica
         return { [weak self] in
@@ -834,7 +834,7 @@ closure()
 
 /*
  En este ejemplo, self se captura en la capture list como [weak self]. Al capturar self de esta manera, estamos diciendo que queremos que self sea una referencia débil dentro del closure. Esto significa que el closure no mantendrá fuertemente a self y no incrementará su conteo de referencia. De esta manera, evitamos una posible referencia cíclica fuerte que podría ocurrir si self también tiene una referencia fuerte al closure.
-
+ 
  Las capture lists también pueden utilizarse para capturar y mantener fuertemente una referencia a un valor:
  */
 
@@ -857,21 +857,21 @@ closure()
 
 /*
  En este ejemplo, myInstance se captura fuertemente en la capture list. Como resultado, el closure conserva el estado de myInstance en el momento en que se creó el closure, incluso si myInstance cambia más tarde.
-
+ 
  En resumen, las capture lists en los closures de Swift son una herramienta poderosa para gestionar la propiedad y captura de valores y referencias en los closures, y son esenciales para evitar fugas de memoria y referencias cíclicas fuertes.
  
  ****************** Uso de self con weak y unkowned en capture list **************
  
  Los closures en Swift capturan y almacenan referencias a cualquier constante y variable que se refieren desde su cuerpo. Este es el mecanismo conocido como "captura de valor". Sin embargo, cuando estas referencias son a self (es decir, a la instancia de la clase en la que está definido el closure), es importante entender cómo se manejan estas referencias para evitar problemas de memoria, como las referencias cíclicas fuertes.
-
+ 
  Vamos a ver estos tres casos que mencionas:
-
+ 
  1. [self]
  */
 
 class MyClass {
     var value = 0
-
+    
     func setupClosure() -> () -> Void {
         return { [self] in
             print(self.value)
@@ -881,13 +881,13 @@ class MyClass {
 
 /*
  Aquí, self se captura en la capture list de manera fuerte. Esto significa que el closure incrementará el conteo de referencia de self y mantendrá una referencia fuerte a self. Esto puede llevar a referencias cíclicas fuertes si self también mantiene una referencia fuerte al closure.
-
+ 
  2. [weak self]
  */
 
 class MyClass {
     var value = 0
-
+    
     func setupClosure() -> () -> Void {
         return { [weak self] in
             print(self?.value ?? 0)
@@ -897,13 +897,13 @@ class MyClass {
 
 /*
  Aquí, self se captura en la capture list de manera débil. Esto significa que el closure no incrementará el conteo de referencia de self y no mantendrá una referencia fuerte a self. Esto evita las referencias cíclicas fuertes, pero significa que self puede ser nil en el momento en que se ejecuta el closure. Por eso usamos self? en lugar de self.
-
+ 
  3. [unowned self]
  */
 
 class MyClass {
     var value = 0
-
+    
     func setupClosure() -> () -> Void {
         return { [unowned self] in
             print(self.value)
@@ -913,6 +913,6 @@ class MyClass {
 
 /*
  Aquí, self se captura en la capture list de manera no propietaria (unowned). Esto es similar a weak, en el sentido de que no incrementa el conteo de referencia de self, pero diferente en que se asume que self no será nil en el momento en que se ejecuta el closure. Si self se libera antes de que se ejecute el closure, se producirá un error en tiempo de ejecución.
-
+ 
  En resumen, las capture lists en Swift son una forma de especificar cómo se deben capturar y mantener las referencias a self en un closure. Es importante entender cómo funcionan para evitar problemas de memoria y garantizar que tu código es seguro y eficiente.
  */
