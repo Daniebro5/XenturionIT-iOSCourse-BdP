@@ -40,4 +40,3 @@ private extension CurrentWeatherView {
             .foregroundColor(.gray)
     }
 }
-
