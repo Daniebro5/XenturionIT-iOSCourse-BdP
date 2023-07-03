@@ -18,7 +18,9 @@ struct BookRowView: View {
           .font(.footnote)
           .foregroundColor(Color("rw-green"))
         HStack {
-          // Insert release Text
+          Text(book.release)
+            .font(.subheadline)
+            .foregroundColor(.secondary)
           Text(book.author)
             .font(.subheadline)
             .italic()
