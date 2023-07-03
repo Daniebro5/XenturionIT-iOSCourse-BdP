@@ -15,8 +15,8 @@ var greeting = "Hello, Tests!"
  *** Qué es lo que debo probar? ******
  
  En general, las pruebas deberían cubrir:
-    - Funcionalidad Core: Clases Model, métodos e interacciones de la lógica de negocio
+    - Funcionalidad Core (Lo que brinda valor al cliente y lo que da plata a la empresa): Clases Model, métodos e interacciones de la lógica de negocio
     - Los workflow más comunes de UI (En conjunto con Analítica)
-    - Casos de Borde (Peticiones de miles de archivos o cero archivos): cubrir casos extremos
+    - Casos de Borde (Peticiones de miles de archivos o cero archivos por rjemplo): cubrir casos extremos
     - Bug Fixes: Para que al introducir nuevo código, no ocurre un Regression
  */

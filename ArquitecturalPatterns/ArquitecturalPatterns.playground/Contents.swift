@@ -70,3 +70,6 @@
  
  Es importante tener en cuenta que cada patrón de arquitectura tiene su lugar y su aplicabilidad depende del contexto y los requisitos del proyecto. Las ventajas y desventajas mencionadas son generales y pueden variar según la situación. Es recomendable evaluar cuidadosamente las necesidades y características del proyecto antes de seleccionar un patrón de arquitectura.
  */
+
+// CI/CD -> DevOps -> Fastlane, Jenkins, CircleCI, Bitrise, Azure, AppCenter
+// Pipelines de GIT -> reglas (si pruebas no pasan, notificar) -> Error, el build no pasa las pruebas

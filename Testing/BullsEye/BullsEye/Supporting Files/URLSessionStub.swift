@@ -1,5 +1,7 @@
 import Foundation
 
+// STUB -> objetos falsos de network
+// Mock -> objetos de lógica falsos
 typealias DataTaskCompletionHandler = (Data?, URLResponse?, Error?) -> Void
 protocol URLSessionProtocol {
   func dataTask(

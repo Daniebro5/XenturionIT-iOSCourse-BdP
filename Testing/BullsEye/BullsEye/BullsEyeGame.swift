@@ -7,9 +7,10 @@ class BullsEyeGame {
   var scoreRound = 0
   var scoreTotal = 0
 
-  var urlSession: URLSessionProtocol = URLSession.shared
+  var urlSession: URLSessionProtocol
 
-  init() {
+  init(urlSession: URLSessionProtocol) {
+    self.urlSession = urlSession
     startNewGame()
   }
 
@@ -31,15 +32,15 @@ class BullsEyeGame {
 
   @discardableResult
   func check(guess: Int) -> Int {
-    let difference = guess - targetValue
-    //    let difference = abs(targetValue - guess)
+    let difference = abs(targetValue - guess)
     scoreRound = 100 - difference
     scoreTotal += scoreRound
     return difference
   }
 
-  func getRandomNumber(completion: @escaping (Int) -> Void) {
-    guard let url = URL(string: "http://www.randomnumberapi.com/api/v1.0/random?min=0&max=100&count=1") else {
+  func getRandomNumber(completion: @escaping (Int) -> Void,
+                       url: URL? = URL(string: "http://www.randomnumberapi.com/api/v1.0/random?min=0&max=100&count=1")) {
+    guard let url = url else {
       return
     }
     let task = urlSession.dataTask(with: url) { data, _, error in
