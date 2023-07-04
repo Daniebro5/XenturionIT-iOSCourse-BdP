@@ -8,8 +8,8 @@
 
 import UIKit
 
-class ImageViewController: UIViewController {
-	var owner: SelectionViewController!
+final class ImageViewController: UIViewController {
+	weak var owner: SelectionViewController!
 	var image: String!
 	var animTimer: Timer!
 
@@ -49,12 +49,15 @@ class ImageViewController: UIViewController {
         super.viewDidLoad()
 
 		title = image.replacingOccurrences(of: "-Large.jpg", with: "")
-		let original = UIImage(named: image)!
+        
+        let path = Bundle.main.path(forResource: image, ofType: nil)!
+        let original = UIImage(contentsOfFile: path)!
 
 		let renderer = UIGraphicsImageRenderer(size: original.size)
 
 		let rounded = renderer.image { ctx in
-			ctx.cgContext.addEllipse(in: CGRect(origin: CGPoint.zero, size: original.size))
+			ctx.cgContext.addEllipse(in: CGRect(origin: CGPoint.zero,
+                                                size: original.size))
 			ctx.cgContext.closePath()
 
 			original.draw(at: CGPoint.zero)
@@ -72,7 +75,12 @@ class ImageViewController: UIViewController {
 			self.imageView.alpha = 1
 		}
 	}
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        animTimer.invalidate()
+    }
+    
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		let defaults = UserDefaults.standard
 		var currentVal = defaults.integer(forKey: image)

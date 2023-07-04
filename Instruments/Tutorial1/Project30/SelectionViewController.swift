@@ -10,7 +10,6 @@ import UIKit
 
 class SelectionViewController: UITableViewController {
 	var items = [String]() // this is the array that will store the filenames to load
-	var viewControllers = [UIViewController]() // create a cache of the detail view controllers for faster loading
 	var dirty = false
 
     override func viewDidLoad() {
@@ -57,7 +56,12 @@ class SelectionViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+        var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        
+        if cell == nil {
+            cell = UITableViewCell(style: .default,
+                                   reuseIdentifier: "Cell")
+        }
 
 		// find the image for this cell, and load its thumbnail
 		let currentImage = items[indexPath.row % items.count]
@@ -95,13 +99,11 @@ class SelectionViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let vc = ImageViewController()
 		vc.image = items[indexPath.row % items.count]
-		vc.owner = self
+		vc.owner = self // ARC += 1 -> Ciclos de referencia
 
 		// mark us as not needing a counter reload when we return
 		dirty = false
 
-		// add to our view controller cache and show
-		viewControllers.append(vc)
 		navigationController!.pushViewController(vc, animated: true)
 	}
 }
