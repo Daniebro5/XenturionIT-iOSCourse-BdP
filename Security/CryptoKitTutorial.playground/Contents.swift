@@ -15,11 +15,20 @@ func hashItem(item: String) -> Int {
   item.hash(into: &hasher)
   return hasher.finalize()
 }
-
-
+let hashValue = hashItem(item: "Diego")
 //: ### Cryptographic Hashing
 let data = getData(for: "Baby", of: "png")
 UIImage(data: data)
+
+let digest = SHA256.hash(data: data)
+String(describing: digest)
+
+let receivedDigest = SHA256.hash(data: data)
+if digest == receivedDigest {
+    print("Son iguales")
+}
+
+String(describing: receivedDigest)
 
 // Create a digest of `data`:
 
@@ -33,8 +42,8 @@ UIImage(data: data)
 
 
 // Small change in `data` produces completely different digest:
-String(describing: SHA256.hash(data: "Harry is a horcrux".data(using: .utf8)!))
-String(describing: SHA256.hash(data: "Harry is a horcrux".data(using: .utf8)!))
+String(describing: SHA256.hash(data: "Joel y Richard </3".data(using: .utf8)!))
+String(describing: SHA256.hash(data: "Joel y Richard <3".data(using: .utf8)!))
 //: ## HMAC: Hash-based Message Authentication Code
 //: Use a symmetric cryptographic key when creating the digest
 //: so the receiver knows it’s from you, or a server can check
@@ -102,9 +111,12 @@ String(describing: SHA256.hash(data: "Harry is a horcrux".data(using: .utf8)!))
 // Dumbledore uses his private key and Harry's public key
 // to calculate `sharedSecret` and `symmetricKey`.
 
+//
 
+// Harry SharedSecret -> jkahsdkjhakjsdhkjahdh -> HOLA
+// Dumbledor SharedSecret -> dhasjkhdiuwenmcksdjsk -> HOLA
 
-
+// Symetric -> hjsdjakhsd / kjahsdkjahsdkjhakhd -> HOLA
 
 // Harry uses his private key and Dumbledore's public key
 // to calculate `sharedSecret` and `symmetricKey`.
