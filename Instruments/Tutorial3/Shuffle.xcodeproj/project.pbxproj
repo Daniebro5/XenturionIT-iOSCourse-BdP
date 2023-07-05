@@ -387,7 +387,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "Shuffle/Preview\\ Content";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3V88CP9Q7V;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Shuffle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -395,7 +395,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.Shuffle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniandre.Shuffle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -410,7 +410,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "Shuffle/Preview\\ Content";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 3V88CP9Q7V;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Shuffle/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -418,7 +418,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.Shuffle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danniandre.Shuffle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
