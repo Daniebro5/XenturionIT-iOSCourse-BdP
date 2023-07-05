@@ -32,43 +32,26 @@
 
 import Foundation
 
-extension Date {
-  var startOfDay: Date {
-    return Calendar.current.startOfDay(for: self)
-  }
+enum CurrentView {
+  case home
+  case profile
+  case editProfile
+}
 
-  var startOfMonth: Date {
-    let calendar = Calendar(identifier: .gregorian)
-    let components = calendar.dateComponents([.year, .month], from: self)
+enum ReportRange: String, CaseIterable {
+  case daily = "Today"
+  case monthly = "This Month"
+  case weekly = "This Week"
 
-    return calendar.date(from: components) ?? Date()
-  }
-
-  var startOfWeek: Date {
-    let calendar = Calendar(identifier: .gregorian)
-    let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
-
-    return calendar.date(from: components) ?? Date()
-  }
-
-  var endOfDay: Date {
-    var components = DateComponents()
-    components.day = 1
-    components.second = -1
-    return Calendar.current.date(byAdding: components, to: startOfDay) ?? Date()
-  }
-
-  var endOfMonth: Date {
-    var components = DateComponents()
-    components.month = 1
-    components.second = -1
-    return Calendar(identifier: .gregorian).date(byAdding: components, to: startOfMonth) ?? Date()
-  }
-
-  var endOfWeek: Date {
-    var components = DateComponents()
-    components.weekOfYear = 1
-    components.second = -1
-    return Calendar(identifier: .gregorian).date(byAdding: components, to: startOfWeek) ?? Date()
+  func timeRange() -> (Date, Date) {
+    let now = Date()
+    switch self {
+    case .daily:
+      return (now.startOfDay, now.endOfDay)
+    case .monthly:
+      return (now.startOfMonth, now.endOfMonth)
+    case .weekly:
+      return (now.startOfWeek, now.endOfWeek)
+    }
   }
 }

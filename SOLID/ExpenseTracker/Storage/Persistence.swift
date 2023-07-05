@@ -30,58 +30,24 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+import Foundation
 import CoreData
-import Combine
 
-class DailyReportsDataSource: ObservableObject {
-  var viewContext: NSManagedObjectContext
+struct PersistenceController {
+  static let shared = PersistenceController()
 
-  @Published private(set) var currentEntries: [ExpenseModel] = []
+  let container: NSPersistentContainer
 
-  init(viewContext: NSManagedObjectContext = AppMain.container.viewContext) {
-    self.viewContext = viewContext
-    prepare()
-  }
-
-  func prepare() {
-    currentEntries = getEntries()
-  }
-
-  private func getEntries() -> [ExpenseModel] {
-    let fetchRequest: NSFetchRequest<ExpenseModel> = ExpenseModel.fetchRequest()
-    fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \ExpenseModel.date, ascending: false)]
-    fetchRequest.predicate = NSPredicate(
-      format: "%@ <= date AND date <= %@",
-      Date().startOfDay as CVarArg,
-      Date().endOfDay as CVarArg)
-    do {
-      let results = try viewContext.fetch(fetchRequest)
-      return results
-    } catch let error {
-      print(error)
-      return []
+  init(inMemory: Bool = false) {
+    container = NSPersistentContainer(name: "ExpensesModel")
+    if inMemory {
+      container.persistentStoreDescriptions.first?.url = URL(
+        fileURLWithPath: "/dev/null")
     }
-  }
-
-  func saveEntry(title: String, price: Double, date: Date, comment: String) {
-    let newItem = ExpenseModel(context: viewContext)
-    newItem.title = title
-    newItem.date = date
-    newItem.comment = comment
-    newItem.price = price
-    newItem.id = UUID()
-
-    if let index = currentEntries.firstIndex(where: { $0.date ?? Date() < date }) {
-      currentEntries.insert(newItem, at: index)
-    } else {
-      currentEntries.append(newItem)
+    container.loadPersistentStores { _, error in
+      if let error = error as NSError? {
+        fatalError("Unresolved error \(error), \(error.userInfo)")
+      }
     }
-
-    try? viewContext.save()
-  }
-
-  func delete(entry: ExpenseModel) {
-    viewContext.delete(entry)
-    try? viewContext.save()
   }
 }

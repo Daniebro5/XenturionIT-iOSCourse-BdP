@@ -31,92 +31,81 @@
 /// THE SOFTWARE.
 
 import SwiftUI
+import Combine
 
-struct AddExpenseView: View {
-  @Environment(\.presentationMode) var presentation
-  var saveEntryHandler: SaveEntryProtocol
-
-  @State var title: String = ""
-  @State var time = Date()
-  @State var comment: String = ""
-  @State var price: String = ""
-  @State var saveDisabled = true
+struct ExpensesView: View {
+  @State private var isAddPresented = false
+  @ObservedObject var dataSource: ReportReader
 
   var body: some View {
-    NavigationView {
-      VStack(alignment: .leading) {
-        Text("Title:")
-        TextField("Entry Title", text: $title)
-          .onChange(of: title) { _ in
-            validateNonEmptyFields()
-          }
-          .padding(.bottom)
-        Text("Amount:")
-        TextField("Expense Amount", text: $price)
-          .keyboardType(.numberPad)
-          .onChange(of: price) { _ in
-            validateNonEmptyFields()
-          }
-          .padding(.bottom)
-        DatePicker(
-          "Time:",
-          selection: $time,
-          displayedComponents: [.hourAndMinute])
-          .padding(.bottom)
-        Text("Comment:")
-        TextEditor(text: $comment)
-      }
-      .padding(.all)
-      .navigationBarTitle("Add Expense", displayMode: .inline)
-      .navigationBarItems(
-        leading: Button(action: cancelEntry) {
-          Text("Cancel")
-        },
-        trailing: Button(action: saveEntry) {
-          Text("Save")
+    VStack {
+      List {
+        ForEach(dataSource.currentEntries, id: \.id) { item in
+          ExpenseItemView(expenseItem: item)
         }
-        .disabled(saveDisabled))
+      }
+      TotalView(totalExpense: dataSource.currentEntries.reduce(0) { $0 + $1.price })
     }
-  }
-
-  func saveEntry() {
-    guard let numericPrice = Double(price), numericPrice > 0 else {
-      return
+    .toolbar {
+      Button(action: {
+        isAddPresented.toggle()
+      }, label: {
+        Image(systemName: "plus")
+      })
     }
-
-    guard saveEntryHandler.saveEntry(
-      title: title,
-      price: numericPrice,
-      date: time,
-      comment: comment)
-    else {
-      print("Invalid entry.")
-      return
+    .fullScreenCover(isPresented: $isAddPresented) { () -> AddExpenseView? in
+      guard let saveHandler = dataSource as? SaveEntryProtocol else {
+        return nil
+      }
+      return AddExpenseView(saveEntryHandler: saveHandler)
     }
-
-    cancelEntry()
-  }
-
-  func cancelEntry() {
-    presentation.wrappedValue.dismiss()
-  }
-
-  func validateNonEmptyFields() {
-    guard Double(price) != nil else {
-      saveDisabled = true
-      return
+    .onAppear {
+      dataSource.prepare()
     }
-    saveDisabled = title.isEmpty
   }
 }
 
-struct AddExpenseView_Previews: PreviewProvider {
-  class PreviewSaveHandler: SaveEntryProtocol {
-    func saveEntry(title: String, price: Double, date: Date, comment: String) -> Bool {
+struct ExpensesView_Previews: PreviewProvider {
+  struct PreviewExpenseEntry: ExpenseModelProtocol {
+    var title: String?
+    var price: Double
+    var comment: String?
+    var date: Date?
+    var id: UUID? = UUID()
+  }
+
+  class PreviewReportsDataSource: ReportReader, SaveEntryProtocol {
+    override init() {
+      super.init()
+      for index in 1..<6 {
+        _ = saveEntry(
+          title: "Test Title \(index)",
+          price: Double(index) * 12.3,
+          date: Date(timeIntervalSinceNow: Double(index * -60)),
+          comment: "Test Comment \(index)")
+      }
+    }
+
+    override func prepare() {
+    }
+
+    func saveEntry(
+      title: String,
+      price: Double,
+      date: Date,
+      comment: String
+    ) -> Bool {
+      let newEntry = PreviewExpenseEntry(
+        title: title,
+        price: price,
+        comment: comment,
+        date: date)
+      currentEntries.append(newEntry)
       return true
     }
   }
+
   static var previews: some View {
-    AddExpenseView(saveEntryHandler: PreviewSaveHandler())
+    ExpensesView(dataSource: PreviewReportsDataSource())
   }
 }

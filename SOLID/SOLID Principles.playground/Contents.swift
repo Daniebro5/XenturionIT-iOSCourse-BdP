@@ -1,4 +1,4 @@
-/*
+/* The Gang of Four
  Los principios SOLID son un conjunto de principios de diseño de software que se utilizan para hacer que el software sea más comprensible, flexible y mantenible. Los cinco principios SOLID son:
 
  1. **Principio de responsabilidad única (SRP, Single Responsibility Principle):** Este principio establece que una clase o módulo debe tener una sola responsabilidad. En otras palabras, una clase debe tener una sola razón para cambiar. Esto ayuda a mantener las clases pequeñas y enfocadas, lo que facilita su comprensión y mantenimiento.

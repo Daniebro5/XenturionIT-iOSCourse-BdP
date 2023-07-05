@@ -33,27 +33,34 @@
 import CoreData
 import Combine
 
-class MonthlyReportsDataSource: ObservableObject {
-  var viewContext: NSManagedObjectContext
+class ReportsDataSource: ReportReader, SaveEntryProtocol {
+  let reportRange: ReportRange
 
-  @Published private(set) var currentEntries: [ExpenseModel] = []
-
-  init(viewContext: NSManagedObjectContext = AppMain.container.viewContext) {
+  init(
+    viewContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext,
+    reportRange: ReportRange
+  ) {
     self.viewContext = viewContext
-    prepare()
-  }
-
-  func prepare() {
+    self.reportRange = reportRange
+    super.init()
     currentEntries = getEntries()
   }
 
-  private func getEntries() -> [ExpenseModel] {
-    let fetchRequest: NSFetchRequest<ExpenseModel> = ExpenseModel.fetchRequest()
+  override func prepare() {
+    currentEntries = getEntries()
+  }
+
+  var viewContext: NSManagedObjectContext
+
+  private func getEntries() -> [ExpenseModelProtocol] {
+    let fetchRequest: NSFetchRequest<ExpenseModel> =
+      ExpenseModel.fetchRequest()
     fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \ExpenseModel.date, ascending: false)]
+    let (startDate, endDate) = reportRange.timeRange()
     fetchRequest.predicate = NSPredicate(
       format: "%@ <= date AND date <= %@",
-      Date().startOfMonth as CVarArg,
-      Date().endOfMonth as CVarArg)
+      startDate as CVarArg,
+      endDate as CVarArg)
     do {
       let results = try viewContext.fetch(fetchRequest)
       return results
@@ -63,7 +70,7 @@ class MonthlyReportsDataSource: ObservableObject {
     }
   }
 
-  func saveEntry(title: String, price: Double, date: Date, comment: String) {
+  func saveEntry(title: String, price: Double, date: Date, comment: String) -> Bool {
     let newItem = ExpenseModel(context: viewContext)
     newItem.title = title
     newItem.date = date
@@ -78,6 +85,7 @@ class MonthlyReportsDataSource: ObservableObject {
     }
 
     try? viewContext.save()
+    return true
   }
 
   func delete(entry: ExpenseModel) {
